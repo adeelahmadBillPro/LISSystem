@@ -35,6 +35,7 @@ import Landing from './pages/Landing'
 import DataImport from './pages/DataImport'
 import UserGuide from './pages/UserGuide'
 import ApiDocs from './pages/ApiDocs'
+import MachineTest from './pages/MachineTest'
 
 export const ThemeContext = createContext()
 
@@ -96,6 +97,7 @@ export default function App() {
             <Route path="import" element={<DataImport />} />
             <Route path="guide" element={<UserGuide />} />
             <Route path="api-docs" element={<ApiDocs />} />
+            <Route path="machine-test" element={<MachineTest />} />
             <Route path="audit-log" element={<AuditLog />} />
             <Route path="settings" element={<Settings />} />
           </Route>

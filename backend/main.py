@@ -1874,6 +1874,30 @@ async def delete_template(tmpl_id: int, db: Session = Depends(get_db), current_u
 
 
 # =============================================
+# MACHINE TEST PARSER
+# =============================================
+
+@app.post("/api/machine/test-parse")
+async def test_parse_message(
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Test parse an HL7/ASTM message without saving to database."""
+    raw = data.get("raw_message", "")
+    if not raw.strip():
+        raise HTTPException(status_code=400, detail="No message provided")
+
+    from backend.machine_adapter import detect_protocol
+    try:
+        adapter = detect_protocol(raw)
+        result = adapter.parse(raw)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Parse error: {str(e)}")
+
+
+# =============================================
 # DATA IMPORT (CSV)
 # =============================================
 
