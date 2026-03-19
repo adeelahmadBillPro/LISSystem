@@ -28,7 +28,7 @@ from loguru import logger
 from fastapi import Request
 from backend.config import get_settings
 from backend.database.connection import get_db
-from backend.database.models import Patient, Doctor, Sample, Result, User, ReferenceRange, Invoice, InvoiceItem, TestCatalog, Category, TestPackage, TestPackageItem, Branch
+from backend.database.models import Patient, Doctor, Sample, Result, User, ReferenceRange, Invoice, InvoiceItem, TestCatalog, Category, TestPackage, TestPackageItem, Branch, LabSettings
 from backend.sms_service import send_report_ready_sms
 from backend.audit_service import AuditLog, log_action
 from backend.whatsapp_service import generate_whatsapp_link, send_whatsapp_report
@@ -838,14 +838,42 @@ async def delete_test(
 # =============================================
 
 @app.get("/api/settings")
-async def get_settings_api(current_user: User = Depends(get_current_user)):
-    settings = get_settings()
-    return {
-        "lab_name": settings.LAB_NAME,
-        "lab_phone": settings.LAB_PHONE,
-        "lab_address": settings.LAB_ADDRESS,
-        "lab_email": settings.LAB_EMAIL,
+async def get_settings_api(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    defaults = get_settings()
+    result = {
+        "lab_name": defaults.LAB_NAME,
+        "lab_phone": defaults.LAB_PHONE,
+        "lab_address": defaults.LAB_ADDRESS,
+        "lab_email": defaults.LAB_EMAIL,
     }
+    # Override with DB values if they exist
+    for setting in db.query(LabSettings).all():
+        if setting.key in result:
+            result[setting.key] = setting.value
+    return result
+
+
+@app.put("/api/settings")
+async def update_settings_api(
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    allowed_keys = ["lab_name", "lab_phone", "lab_address", "lab_email"]
+    for key, value in data.items():
+        if key not in allowed_keys:
+            continue
+        existing = db.query(LabSettings).filter(LabSettings.key == key).first()
+        if existing:
+            existing.value = sanitize(str(value))
+        else:
+            db.add(LabSettings(key=key, value=sanitize(str(value))))
+    db.commit()
+    log_action(db, current_user, "UPDATE", "settings", None, "Lab settings updated")
+    return {"message": "Settings saved successfully"}
 
 
 # =============================================

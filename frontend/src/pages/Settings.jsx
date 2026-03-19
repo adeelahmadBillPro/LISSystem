@@ -23,7 +23,8 @@ export default function Settings() {
       await api.put('/settings', settings)
       setSuccess('Settings saved successfully!')
     } catch (err) {
-      setSuccess('Settings saved locally (backend endpoint pending)')
+      setSuccess('')
+      alert(err.response?.data?.detail || 'Failed to save settings')
     }
     finally { setSaving(false) }
   }

@@ -210,6 +210,14 @@ class Branch(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class LabSettings(Base):
+    __tablename__ = "lab_settings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String(50), unique=True, nullable=False)
+    value = Column(Text, nullable=True)
+
+
 class Category(Base):
     __tablename__ = "categories"
 
