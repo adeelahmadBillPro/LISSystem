@@ -22,6 +22,8 @@ export default function Samples() {
 
   const statusColors = {
     pending: 'bg-yellow-100 text-yellow-700',
+    collected: 'bg-orange-100 text-orange-700',
+    received: 'bg-cyan-100 text-cyan-700',
     processing: 'bg-blue-100 text-blue-700',
     completed: 'bg-green-100 text-green-700',
     verified: 'bg-emerald-100 text-emerald-700',
@@ -72,9 +74,24 @@ export default function Samples() {
                 <td className="px-6 py-4 font-medium">{s.sample_id}</td>
                 <td className="px-6 py-4">{s.test_panel || '-'}</td>
                 <td className="px-6 py-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[s.status] || ''}`}>
-                    {s.status}
-                  </span>
+                  <select
+                    value={s.status}
+                    onChange={async (e) => {
+                      try {
+                        await api.put(`/samples/${s.sample_id}/status`, { status: e.target.value })
+                        fetchSamples()
+                      } catch (err) { alert(err.response?.data?.detail || 'Failed') }
+                    }}
+                    className={`px-2 py-1 rounded-full text-xs font-medium border-0 cursor-pointer ${statusColors[s.status] || ''}`}
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="collected">Collected</option>
+                    <option value="received">Received</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="verified">Verified</option>
+                    <option value="printed">Printed</option>
+                  </select>
                 </td>
                 <td className="px-6 py-4 text-slate-500">{s.machine_id || '-'}</td>
                 <td className="px-6 py-4 text-slate-500">{new Date(s.created_at).toLocaleDateString()}</td>
