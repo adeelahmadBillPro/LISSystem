@@ -6,8 +6,52 @@ export default function DataImport() {
   const [loading, setLoading] = useState('')
   const [error, setError] = useState('')
 
-  const handleUpload = async (type, file) => {
-    if (!file) return
+  const [patientFile, setPatientFile] = useState(null)
+  const [doctorFile, setDoctorFile] = useState(null)
+
+  const validateCSV = async (file, type) => {
+    // Read first line to check columns
+    const text = await file.text()
+    const firstLine = text.split('\n')[0].toLowerCase()
+
+    if (type === 'patients') {
+      if (firstLine.includes('specialization') && !firstLine.includes('mrn')) {
+        setError('This looks like a doctor CSV file. Please use the "Import Doctors" section instead.')
+        return false
+      }
+      if (!firstLine.includes('mrn') && !firstLine.includes('name') && !firstLine.includes('first_name')) {
+        setError('Invalid CSV format. Must have columns: mrn, first_name, last_name (or name)')
+        return false
+      }
+    }
+
+    if (type === 'doctors') {
+      if (firstLine.includes('mrn') || firstLine.includes('dob') || firstLine.includes('gender')) {
+        setError('This looks like a patient CSV file. Please use the "Import Patients" section instead.')
+        return false
+      }
+      if (!firstLine.includes('name')) {
+        setError('Invalid CSV format. Must have column: name')
+        return false
+      }
+    }
+    return true
+  }
+
+  const handleUpload = async (type) => {
+    const file = type === 'patients' ? patientFile : doctorFile
+    if (!file) { setError('Please select a file first'); return }
+
+    // Validate file type
+    if (!file.name.endsWith('.csv') && !file.name.endsWith('.txt')) {
+      setError('Only CSV files are allowed')
+      return
+    }
+
+    // Validate columns match the right type
+    const valid = await validateCSV(file, type)
+    if (!valid) return
+
     setLoading(type); setError(''); setResult(null)
     const formData = new FormData()
     formData.append('file', file)
@@ -16,6 +60,8 @@ export default function DataImport() {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       setResult(r.data)
+      if (type === 'patients') setPatientFile(null)
+      else setDoctorFile(null)
     } catch (err) {
       setError(err.response?.data?.detail || 'Import failed')
     } finally { setLoading('') }
@@ -61,11 +107,13 @@ export default function DataImport() {
           <input
             type="file"
             accept=".csv,.txt"
-            onChange={e => handleUpload('patients', e.target.files[0])}
-            disabled={loading === 'patients'}
-            className="w-full text-sm"
+            onChange={e => { setPatientFile(e.target.files[0]); setError('') }}
+            className="w-full text-sm mb-2"
           />
-          {loading === 'patients' && <p className="text-sm text-blue-600 mt-2 animate-pulse">Importing...</p>}
+          <button onClick={() => handleUpload('patients')} disabled={!patientFile || loading === 'patients'}
+            className="w-full py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50 transition-all">
+            {loading === 'patients' ? 'Importing...' : 'Upload & Import Patients'}
+          </button>
 
           {/* Download sample CSV */}
           <button
@@ -97,11 +145,13 @@ export default function DataImport() {
           <input
             type="file"
             accept=".csv,.txt"
-            onChange={e => handleUpload('doctors', e.target.files[0])}
-            disabled={loading === 'doctors'}
-            className="w-full text-sm"
+            onChange={e => { setDoctorFile(e.target.files[0]); setError('') }}
+            className="w-full text-sm mb-2"
           />
-          {loading === 'doctors' && <p className="text-sm text-blue-600 mt-2 animate-pulse">Importing...</p>}
+          <button onClick={() => handleUpload('doctors')} disabled={!doctorFile || loading === 'doctors'}
+            className="w-full py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50 transition-all">
+            {loading === 'doctors' ? 'Importing...' : 'Upload & Import Doctors'}
+          </button>
 
           <button
             onClick={() => {
