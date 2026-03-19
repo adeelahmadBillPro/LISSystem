@@ -21,10 +21,12 @@ export default function AuditLog() {
 
   const actions = ['', 'LOGIN', 'CREATE', 'UPDATE', 'DELETE', 'VERIFY', 'WHATSAPP', 'EMAIL', 'PRINT']
   const actionColors = {
-    LOGIN: 'bg-blue-100 text-blue-700', CREATE: 'bg-green-100 text-green-700',
-    UPDATE: 'bg-yellow-100 text-yellow-700', DELETE: 'bg-red-100 text-red-700',
-    VERIFY: 'bg-emerald-100 text-emerald-700', WHATSAPP: 'bg-green-100 text-green-700',
-    EMAIL: 'bg-purple-100 text-purple-700', PRINT: 'bg-slate-100 text-slate-700',
+    LOGIN: 'bg-blue-600 text-white', CREATE: 'bg-green-600 text-white',
+    UPDATE: 'bg-amber-500 text-white', DELETE: 'bg-red-600 text-white',
+    VERIFY: 'bg-emerald-600 text-white', WHATSAPP: 'bg-green-700 text-white',
+    EMAIL: 'bg-purple-600 text-white', PRINT: 'bg-slate-600 text-white',
+    MANUAL_ENTRY: 'bg-indigo-600 text-white', SMS: 'bg-teal-600 text-white',
+    STATUS_UPDATE: 'bg-cyan-600 text-white',
   }
 
   return (

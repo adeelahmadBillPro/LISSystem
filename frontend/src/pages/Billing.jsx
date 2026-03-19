@@ -186,6 +186,7 @@ export default function Billing() {
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Amount</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Payment</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Date</th>
+              <th className="text-left px-6 py-3 text-slate-600 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -197,6 +198,9 @@ export default function Billing() {
                 <td className="px-6 py-4 font-bold text-green-700">Rs. {inv.total_amount}</td>
                 <td className="px-6 py-4">{inv.payment_method}</td>
                 <td className="px-6 py-4 text-slate-500">{new Date(inv.created_at).toLocaleString()}</td>
+                <td className="px-6 py-4">
+                  <a href={`/receipt/${inv.id}`} className="text-blue-600 hover:underline text-xs">Print Receipt</a>
+                </td>
               </tr>
             ))}
             {invoices.length === 0 && (

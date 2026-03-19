@@ -81,6 +81,9 @@ export default function Samples() {
                 <td className="px-6 py-4 space-x-2">
                   <Link to={`/results/${s.sample_id}`} className="text-blue-600 hover:underline">Results</Link>
                   <Link to={`/report/${s.sample_id}`} className="text-green-600 hover:underline">Report</Link>
+                  {s.status === 'pending' && (
+                    <Link to={`/manual-results/${s.sample_id}`} className="text-purple-600 hover:underline">Enter Results</Link>
+                  )}
                 </td>
               </tr>
             ))}

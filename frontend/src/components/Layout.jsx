@@ -1,6 +1,7 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from '../App'
+import api from '../api'
 
 const navSections = [
   {
@@ -27,6 +28,7 @@ const navSections = [
       { path: '/billing', label: 'Billing', icon: '💰' },
       { path: '/daily-closing', label: 'Daily Closing', icon: '📝' },
       { path: '/reports', label: 'MIS Reports', icon: '📈' },
+      { path: '/export', label: 'Export Data', icon: '📥' },
     ],
   },
   {
@@ -51,7 +53,18 @@ export default function Layout() {
   const location = useLocation()
   const user = JSON.parse(localStorage.getItem('user') || '{}')
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [notifications, setNotifications] = useState([])
+  const [showNotifs, setShowNotifs] = useState(false)
   const { darkMode, setDarkMode } = useContext(ThemeContext)
+
+  useEffect(() => {
+    const fetchNotifs = () => {
+      api.get('/notifications').then(r => setNotifications(r.data)).catch(() => {})
+    }
+    fetchNotifs()
+    const interval = setInterval(fetchNotifs, 30000) // refresh every 30s
+    return () => clearInterval(interval)
+  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -126,8 +139,43 @@ export default function Layout() {
       </aside>
 
       {/* Main Content */}
-      <main className={`flex-1 p-4 md:p-8 overflow-auto ${darkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
-        <div className="animate-fadeIn">
+      <main className={`flex-1 overflow-auto ${darkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
+        {/* Top Bar with Notification Bell */}
+        <div className={`px-4 md:px-8 py-3 border-b flex justify-end items-center gap-3 ${darkMode ? 'border-slate-700 bg-slate-800/50' : 'border-slate-100 bg-white/50'} backdrop-blur-sm print:hidden`}>
+          <div className="relative">
+            <button onClick={() => setShowNotifs(!showNotifs)}
+              className={`relative p-2 rounded-lg transition-colors ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-100'}`}>
+              <span className="text-lg">🔔</span>
+              {notifications.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white rounded-full text-[10px] flex items-center justify-center animate-pulse">
+                  {notifications.length}
+                </span>
+              )}
+            </button>
+
+            {showNotifs && (
+              <div className={`absolute right-0 mt-2 w-80 rounded-xl shadow-xl border z-50 animate-slideDown ${darkMode ? 'bg-slate-800 border-slate-600' : 'bg-white border-slate-200'}`}>
+                <div className="p-3 border-b font-semibold text-sm">Notifications ({notifications.length})</div>
+                <div className="max-h-64 overflow-y-auto">
+                  {notifications.map((n, i) => (
+                    <div key={i} className={`p-3 border-b text-sm ${darkMode ? 'border-slate-700 hover:bg-slate-700' : 'border-slate-50 hover:bg-slate-50'}`}>
+                      <div className="flex items-center gap-2">
+                        <span>{n.type === 'critical' ? '🚨' : n.type === 'abnormal' ? '⚠️' : n.type === 'pending' ? '⏳' : '📦'}</span>
+                        <span className="font-medium">{n.title}</span>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-0.5">{n.detail}</p>
+                    </div>
+                  ))}
+                  {notifications.length === 0 && (
+                    <div className="p-4 text-center text-slate-400 text-sm">No notifications</div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="p-4 md:p-8 animate-fadeIn">
           <Outlet />
         </div>
       </main>

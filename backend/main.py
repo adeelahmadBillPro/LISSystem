@@ -1874,6 +1874,282 @@ async def delete_template(tmpl_id: int, db: Session = Depends(get_db), current_u
 
 
 # =============================================
+# MANUAL RESULT ENTRY
+# =============================================
+
+@app.post("/api/samples/{sample_id}/manual-results")
+async def manual_result_entry(
+    sample_id: str,
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Enter results manually when machine is offline."""
+    sample = db.query(Sample).filter(Sample.sample_id == sample_id).first()
+    if not sample:
+        raise HTTPException(status_code=404, detail="Sample not found")
+
+    results_data = data.get("results", [])
+    if not results_data:
+        raise HTTPException(status_code=400, detail="No results provided")
+
+    saved = 0
+    for r in results_data:
+        value = r.get("value", "").strip()
+        if not value:
+            continue
+
+        # Auto-flag based on reference ranges
+        flag = "N"
+        ref_low = r.get("ref_low")
+        ref_high = r.get("ref_high")
+
+        if ref_low is not None and ref_high is not None:
+            try:
+                num_val = float(value)
+                if num_val > float(ref_high):
+                    flag = "H"
+                elif num_val < float(ref_low):
+                    flag = "L"
+            except (ValueError, TypeError):
+                pass
+
+        result = Result(
+            sample_id=sample.id,
+            test_code=sanitize(r.get("test_code", "")),
+            test_name=sanitize(r.get("test_name", "")),
+            value=value,
+            unit=r.get("unit", ""),
+            ref_low=ref_low,
+            ref_high=ref_high,
+            flag=r.get("flag") or flag,
+            status="final",
+        )
+        db.add(result)
+        saved += 1
+
+    sample.status = "completed"
+    sample.received_at = datetime.utcnow()
+    db.commit()
+
+    log_action(db, current_user, "MANUAL_ENTRY", "sample", sample_id, f"Entered {saved} results manually")
+    return {"message": f"Saved {saved} results", "sample_id": sample_id}
+
+
+# =============================================
+# DATA EXPORT (CSV/Excel)
+# =============================================
+
+@app.get("/api/export/patients")
+async def export_patients(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    import csv, io
+    patients = db.query(Patient).order_by(Patient.created_at.desc()).all()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["MRN", "First Name", "Last Name", "Gender", "DOB", "Age", "Phone", "Address", "Registered"])
+    for p in patients:
+        writer.writerow([p.mrn, p.first_name, p.last_name, p.gender, p.dob, p.age, p.phone, p.address, p.created_at])
+
+    from fastapi.responses import StreamingResponse
+    output.seek(0)
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=patients_export.csv"},
+    )
+
+
+@app.get("/api/export/results")
+async def export_results(
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    import csv, io
+    query = db.query(Result, Sample, Patient).join(Sample, Result.sample_id == Sample.id).join(Patient, Sample.patient_id == Patient.id)
+    if date_from:
+        query = query.filter(Result.received_at >= datetime.combine(date_from, datetime.min.time()))
+    if date_to:
+        query = query.filter(Result.received_at <= datetime.combine(date_to, datetime.max.time()))
+
+    rows = query.order_by(Result.received_at.desc()).all()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Sample ID", "Patient MRN", "Patient Name", "Test Code", "Test Name", "Value", "Unit", "Ref Low", "Ref High", "Flag", "Status", "Date"])
+    for r, s, p in rows:
+        writer.writerow([s.sample_id, p.mrn, p.full_name, r.test_code, r.test_name, r.value, r.unit, r.ref_low, r.ref_high, r.flag, r.status, r.received_at])
+
+    from fastapi.responses import StreamingResponse
+    output.seek(0)
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=results_export.csv"},
+    )
+
+
+@app.get("/api/export/invoices")
+async def export_invoices(
+    date_from: Optional[date] = None,
+    date_to: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    import csv, io
+    query = db.query(Invoice, Patient).join(Patient, Invoice.patient_id == Patient.id)
+    if date_from:
+        query = query.filter(Invoice.created_at >= datetime.combine(date_from, datetime.min.time()))
+    if date_to:
+        query = query.filter(Invoice.created_at <= datetime.combine(date_to, datetime.max.time()))
+
+    rows = query.order_by(Invoice.created_at.desc()).all()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Invoice #", "Patient MRN", "Patient Name", "Amount", "Discount %", "Payment Method", "Date"])
+    for inv, p in rows:
+        writer.writerow([f"INV-{str(inv.id).zfill(5)}", p.mrn, p.full_name, inv.total_amount, inv.discount_percent, inv.payment_method, inv.created_at])
+
+    from fastapi.responses import StreamingResponse
+    output.seek(0)
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=invoices_export.csv"},
+    )
+
+
+# =============================================
+# NOTIFICATIONS
+# =============================================
+
+@app.get("/api/notifications")
+async def get_notifications(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    today_start = datetime.combine(date.today(), datetime.min.time())
+    notifs = []
+
+    # Critical results
+    critical = db.query(Result, Sample).join(Sample, Result.sample_id == Sample.id).filter(
+        Result.flag.in_(["H", "L", "HH", "LL"]),
+        Result.received_at >= today_start,
+    ).order_by(Result.received_at.desc()).limit(10).all()
+
+    for r, s in critical:
+        notifs.append({
+            "type": "critical" if r.flag in ("HH", "LL") else "abnormal",
+            "title": f"{r.test_name}: {r.value} ({r.flag})",
+            "detail": f"Sample {s.sample_id}",
+            "time": r.received_at.isoformat() if r.received_at else "",
+        })
+
+    # Pending verification
+    pending = db.query(func.count(Sample.id)).filter(
+        Sample.status == "completed",
+    ).scalar() or 0
+    if pending > 0:
+        notifs.insert(0, {
+            "type": "pending",
+            "title": f"{pending} sample(s) pending verification",
+            "detail": "Go to Verification page",
+            "time": "",
+        })
+
+    # Low stock
+    low_stock = db.query(func.count(InventoryItem.id)).filter(
+        InventoryItem.is_active == True,
+        InventoryItem.quantity <= InventoryItem.min_quantity,
+    ).scalar() or 0
+    if low_stock > 0:
+        notifs.append({
+            "type": "low_stock",
+            "title": f"{low_stock} inventory item(s) low on stock",
+            "detail": "Go to Inventory page",
+            "time": "",
+        })
+
+    return notifs
+
+
+# =============================================
+# SAMPLE TRACKING
+# =============================================
+
+@app.put("/api/samples/{sample_id}/status")
+async def update_sample_status(
+    sample_id: str,
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    sample = db.query(Sample).filter(Sample.sample_id == sample_id).first()
+    if not sample:
+        raise HTTPException(status_code=404, detail="Sample not found")
+
+    new_status = data.get("status")
+    valid = ["pending", "collected", "received", "processing", "completed", "verified", "printed"]
+    if new_status not in valid:
+        raise HTTPException(status_code=400, detail=f"Invalid status. Must be one of: {', '.join(valid)}")
+
+    sample.status = new_status
+    if new_status == "received":
+        sample.received_at = datetime.utcnow()
+    elif new_status == "completed":
+        sample.reported_at = datetime.utcnow()
+
+    db.commit()
+    log_action(db, current_user, "STATUS_UPDATE", "sample", sample_id, f"Status → {new_status}")
+    return {"message": f"Sample {sample_id} status updated to {new_status}"}
+
+
+# =============================================
+# INVOICE RECEIPT (thermal printer format)
+# =============================================
+
+@app.get("/api/billing/invoices/{invoice_id}/receipt")
+async def get_invoice_receipt(
+    invoice_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    invoice = db.query(Invoice).filter(Invoice.id == invoice_id).first()
+    if not invoice:
+        raise HTTPException(status_code=404, detail="Invoice not found")
+
+    patient = db.query(Patient).filter(Patient.id == invoice.patient_id).first()
+    items = db.query(InvoiceItem).filter(InvoiceItem.invoice_id == invoice.id).all()
+    created_by = db.query(User).filter(User.id == invoice.created_by).first() if invoice.created_by else None
+
+    # Get lab settings
+    lab_settings = {}
+    for s in db.query(LabSettings).all():
+        lab_settings[s.key] = s.value
+    defaults = get_settings()
+
+    return {
+        "invoice_id": f"INV-{str(invoice.id).zfill(5)}",
+        "lab_name": lab_settings.get("lab_name", defaults.LAB_NAME),
+        "lab_phone": lab_settings.get("lab_phone", defaults.LAB_PHONE),
+        "lab_address": lab_settings.get("lab_address", defaults.LAB_ADDRESS),
+        "patient_name": patient.full_name if patient else "",
+        "patient_mrn": patient.mrn if patient else "",
+        "patient_phone": patient.phone if patient else "",
+        "items": [{"test_name": i.test_name, "price": float(i.price)} for i in items],
+        "subtotal": sum(float(i.price) for i in items),
+        "discount_percent": invoice.discount_percent,
+        "total": float(invoice.total_amount),
+        "payment_method": invoice.payment_method,
+        "created_by": created_by.full_name if created_by else "",
+        "date": invoice.created_at.strftime("%d-%b-%Y %I:%M %p"),
+    }
+
+
+# =============================================
 # STARTUP
 # =============================================
 

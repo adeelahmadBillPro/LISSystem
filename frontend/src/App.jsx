@@ -28,6 +28,10 @@ import ForgotPassword from './pages/ForgotPassword'
 import TokenQueue from './pages/TokenQueue'
 import Inventory from './pages/Inventory'
 import ReportTemplates from './pages/ReportTemplates'
+import ManualResults from './pages/ManualResults'
+import InvoiceReceipt from './pages/InvoiceReceipt'
+import DataExport from './pages/DataExport'
+import Landing from './pages/Landing'
 
 export const ThemeContext = createContext()
 
@@ -49,6 +53,7 @@ export default function App() {
     <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
       <div className={darkMode ? 'dark' : ''}>
         <Routes>
+          <Route path="/landing" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -82,6 +87,9 @@ export default function App() {
             <Route path="token-queue" element={<TokenQueue />} />
             <Route path="inventory" element={<Inventory />} />
             <Route path="report-templates" element={<ReportTemplates />} />
+            <Route path="manual-results/:sampleId" element={<ManualResults />} />
+            <Route path="receipt/:invoiceId" element={<InvoiceReceipt />} />
+            <Route path="export" element={<DataExport />} />
             <Route path="audit-log" element={<AuditLog />} />
             <Route path="settings" element={<Settings />} />
           </Route>
