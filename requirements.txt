@@ -1,0 +1,28 @@
+# FastAPI & Server
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database
+sqlalchemy
+psycopg[binary]
+alembic
+
+# Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt
+
+# HL7 & Serial Communication
+hl7
+pyserial
+
+# PDF Generation
+reportlab
+
+# Utilities
+pydantic
+pydantic-settings
+python-dotenv
+loguru
+requests

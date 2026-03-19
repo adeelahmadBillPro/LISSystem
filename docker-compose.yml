@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: lis_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres123@db:5432/lis_db
+      SECRET_KEY: change-this-to-a-secure-random-string
+      LAB_NAME: City Diagnostic Laboratory
+      LAB_PHONE: "+92-300-1234567"
+      LAB_ADDRESS: "Main Boulevard, Lahore, Pakistan"
+      LAB_EMAIL: info@citydiagnostics.pk
+    depends_on:
+      - db
+    volumes:
+      - ./reports:/app/reports
+      - ./signatures:/app/signatures
+      - ./logs:/app/logs
+
+volumes:
+  pgdata:
