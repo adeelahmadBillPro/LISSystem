@@ -32,6 +32,8 @@ import ManualResults from './pages/ManualResults'
 import InvoiceReceipt from './pages/InvoiceReceipt'
 import DataExport from './pages/DataExport'
 import Landing from './pages/Landing'
+import DataImport from './pages/DataImport'
+import UserGuide from './pages/UserGuide'
 
 export const ThemeContext = createContext()
 
@@ -90,6 +92,8 @@ export default function App() {
             <Route path="manual-results/:sampleId" element={<ManualResults />} />
             <Route path="receipt/:invoiceId" element={<InvoiceReceipt />} />
             <Route path="export" element={<DataExport />} />
+            <Route path="import" element={<DataImport />} />
+            <Route path="guide" element={<UserGuide />} />
             <Route path="audit-log" element={<AuditLog />} />
             <Route path="settings" element={<Settings />} />
           </Route>

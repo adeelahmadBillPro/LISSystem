@@ -41,6 +41,8 @@ const navSections = [
       { path: '/branches', label: 'Branches', icon: '🏢' },
       { path: '/inventory', label: 'Inventory', icon: '📦' },
       { path: '/report-templates', label: 'Report Templates', icon: '📋' },
+      { path: '/import', label: 'Import Data', icon: '📤' },
+      { path: '/guide', label: 'User Guide', icon: '📖' },
       { path: '/audit-log', label: 'Audit Log', icon: '📋' },
       { path: '/settings', label: 'Settings', icon: '⚙️' },
     ],

@@ -1874,6 +1874,113 @@ async def delete_template(tmpl_id: int, db: Session = Depends(get_db), current_u
 
 
 # =============================================
+# DATA IMPORT (CSV)
+# =============================================
+
+@app.post("/api/import/patients")
+async def import_patients_csv(
+    file: UploadFile,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    """Import patients from CSV file. Columns: mrn, first_name, last_name, gender, dob, phone, address"""
+    import csv, io
+
+    content = await file.read()
+    text = content.decode("utf-8-sig")  # Handle BOM from Excel
+    reader = csv.DictReader(io.StringIO(text))
+
+    imported = 0
+    skipped = 0
+    errors = []
+
+    for i, row in enumerate(reader, start=2):
+        try:
+            mrn = (row.get("mrn") or row.get("MRN") or "").strip()
+            if not mrn:
+                errors.append(f"Row {i}: MRN is empty")
+                skipped += 1
+                continue
+
+            # Check duplicate
+            if db.query(Patient).filter(Patient.mrn == mrn).first():
+                skipped += 1
+                continue
+
+            patient = Patient(
+                mrn=sanitize(mrn),
+                first_name=sanitize(row.get("first_name") or row.get("First Name") or row.get("name", "").split()[0] if row.get("name") else ""),
+                last_name=sanitize(row.get("last_name") or row.get("Last Name") or (row.get("name", "").split()[-1] if row.get("name") and len(row.get("name", "").split()) > 1 else "")),
+                gender=(row.get("gender") or row.get("Gender") or "")[:1].upper() or None,
+                phone=row.get("phone") or row.get("Phone") or row.get("mobile") or None,
+                address=row.get("address") or row.get("Address") or None,
+            )
+
+            # Parse DOB
+            dob_str = row.get("dob") or row.get("DOB") or row.get("date_of_birth") or ""
+            if dob_str:
+                for fmt in ["%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%m/%d/%Y", "%d-%b-%Y"]:
+                    try:
+                        patient.dob = datetime.strptime(dob_str.strip(), fmt).date()
+                        break
+                    except ValueError:
+                        continue
+
+            db.add(patient)
+            imported += 1
+
+        except Exception as e:
+            errors.append(f"Row {i}: {str(e)}")
+            skipped += 1
+
+    db.commit()
+    log_action(db, current_user, "IMPORT", "patients", None, f"Imported {imported}, skipped {skipped}")
+
+    return {
+        "message": f"Import complete: {imported} imported, {skipped} skipped",
+        "imported": imported,
+        "skipped": skipped,
+        "errors": errors[:10],  # Show first 10 errors
+    }
+
+
+@app.post("/api/import/doctors")
+async def import_doctors_csv(
+    file: UploadFile,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    """Import doctors from CSV. Columns: name, specialization, phone, email"""
+    import csv, io
+
+    content = await file.read()
+    reader = csv.DictReader(io.StringIO(content.decode("utf-8-sig")))
+
+    imported = 0
+    skipped = 0
+
+    for row in reader:
+        name = sanitize(row.get("name") or row.get("Name") or "").strip()
+        if not name:
+            skipped += 1
+            continue
+        if db.query(Doctor).filter(Doctor.name == name).first():
+            skipped += 1
+            continue
+
+        db.add(Doctor(
+            name=name,
+            specialization=row.get("specialization") or row.get("Specialization") or None,
+            phone=row.get("phone") or row.get("Phone") or None,
+            email=row.get("email") or row.get("Email") or None,
+        ))
+        imported += 1
+
+    db.commit()
+    return {"message": f"Imported {imported} doctors, skipped {skipped}", "imported": imported, "skipped": skipped}
+
+
+# =============================================
 # MANUAL RESULT ENTRY
 # =============================================
 
