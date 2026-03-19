@@ -43,6 +43,7 @@ const navSections = [
       { path: '/report-templates', label: 'Report Templates', icon: '📋' },
       { path: '/import', label: 'Import Data', icon: '📤' },
       { path: '/guide', label: 'User Guide', icon: '📖' },
+      { path: '/api-docs', label: 'API Docs', icon: '🔗' },
       { path: '/audit-log', label: 'Audit Log', icon: '📋' },
       { path: '/settings', label: 'Settings', icon: '⚙️' },
     ],
