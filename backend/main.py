@@ -2,6 +2,9 @@
 FastAPI Application - Laboratory Information System API.
 """
 
+import os
+import re
+import html
 from datetime import datetime, date, timedelta
 from typing import Optional
 
@@ -10,6 +13,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+
+
+def sanitize(value: str) -> str:
+    """Sanitize input to prevent XSS attacks."""
+    if not value:
+        return value
+    value = html.escape(value.strip())
+    value = re.sub(r'<[^>]*>', '', value)  # Remove any HTML tags
+    return value
 from sqlalchemy import func
 from loguru import logger
 
@@ -93,15 +105,19 @@ async def register_user(
 @app.post("/api/auth/signup")
 async def signup(data: dict, db: Session = Depends(get_db)):
     """Public signup — creates inactive account that admin must activate."""
-    username = data.get("username", "").strip().lower()
+    username = sanitize(data.get("username", "")).strip().lower()
     password = data.get("password", "")
-    full_name = data.get("full_name", "").strip()
+    full_name = sanitize(data.get("full_name", "")).strip()
     role = data.get("role", "receptionist")
 
     if not username or not password or not full_name:
         raise HTTPException(status_code=400, detail="All fields are required")
-    if len(username) < 3:
-        raise HTTPException(status_code=400, detail="Username must be at least 3 characters")
+    if len(username) < 3 or len(username) > 50:
+        raise HTTPException(status_code=400, detail="Username must be 3-50 characters")
+    if len(full_name) > 200:
+        raise HTTPException(status_code=400, detail="Name too long (max 200 characters)")
+    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+        raise HTTPException(status_code=400, detail="Username can only contain letters, numbers, and underscores")
     if len(password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
 
@@ -222,7 +238,13 @@ async def create_patient(
     if db.query(Patient).filter(Patient.mrn == patient_data.mrn).first():
         raise HTTPException(status_code=400, detail="Patient with this MRN already exists")
 
-    patient = Patient(**patient_data.model_dump())
+    # Sanitize all string inputs
+    data = patient_data.model_dump()
+    for key in ["first_name", "last_name", "phone", "address", "mrn"]:
+        if key in data and isinstance(data[key], str):
+            data[key] = sanitize(data[key])
+
+    patient = Patient(**data)
     db.add(patient)
     db.commit()
     db.refresh(patient)
@@ -256,7 +278,15 @@ async def create_doctor(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    doctor = Doctor(**doctor_data.model_dump())
+    # Check duplicate doctor name
+    clean_name = sanitize(doctor_data.name)
+    existing = db.query(Doctor).filter(Doctor.name == clean_name).first()
+    if existing:
+        raise HTTPException(status_code=400, detail=f"Doctor '{clean_name}' already exists")
+
+    data = doctor_data.model_dump()
+    data["name"] = clean_name
+    doctor = Doctor(**data)
     db.add(doctor)
     db.commit()
     db.refresh(doctor)
@@ -748,6 +778,8 @@ async def create_test(
 ):
     if db.query(TestCatalog).filter(TestCatalog.test_code == data["test_code"]).first():
         raise HTTPException(status_code=400, detail="Test code already exists")
+    if db.query(TestCatalog).filter(TestCatalog.test_name == data["test_name"]).first():
+        raise HTTPException(status_code=400, detail="Test name already exists")
 
     test = TestCatalog(
         test_code=data["test_code"],
@@ -1174,25 +1206,49 @@ async def get_audit_logs(
 async def download_backup(
     current_user: User = Depends(require_role("admin")),
 ):
-    """Download a backup of the SQLite database."""
+    """Download a backup of the database."""
     import shutil
+    import subprocess
     settings = get_settings()
+
+    os.makedirs("./backups", exist_ok=True)
+    backup_name = f"lis_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     if "sqlite" in settings.DATABASE_URL:
         db_path = settings.DATABASE_URL.replace("sqlite:///", "").replace("./", "")
         full_path = os.path.join(os.getcwd(), db_path) if not os.path.isabs(db_path) else db_path
-
         if not os.path.exists(full_path):
             raise HTTPException(status_code=404, detail="Database file not found")
-
-        backup_name = f"lis_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
-        backup_path = os.path.join("./backups", backup_name)
-        os.makedirs("./backups", exist_ok=True)
+        backup_path = f"./backups/{backup_name}.db"
         shutil.copy2(full_path, backup_path)
-
-        return FileResponse(backup_path, media_type="application/octet-stream", filename=backup_name)
+        return FileResponse(backup_path, media_type="application/octet-stream", filename=f"{backup_name}.db")
     else:
-        raise HTTPException(status_code=400, detail="Use pg_dump for PostgreSQL backups")
+        # PostgreSQL backup using pg_dump
+        backup_path = f"./backups/{backup_name}.sql"
+        pg_dump = r"C:\Program Files\PostgreSQL\17\bin\pg_dump.exe"
+        try:
+            # Parse connection string
+            db_url = settings.DATABASE_URL
+            # Extract components
+            import urllib.parse
+            parsed = urllib.parse.urlparse(db_url)
+            env = os.environ.copy()
+            env["PGPASSWORD"] = urllib.parse.unquote(parsed.password) if parsed.password else ""
+
+            result = subprocess.run(
+                [pg_dump, "-h", parsed.hostname or "localhost",
+                 "-p", str(parsed.port or 5432),
+                 "-U", parsed.username or "postgres",
+                 "-d", parsed.path.lstrip("/"),
+                 "-f", backup_path],
+                env=env, capture_output=True, text=True, timeout=60,
+            )
+            if result.returncode != 0:
+                raise HTTPException(status_code=500, detail=f"Backup failed: {result.stderr[:200]}")
+
+            return FileResponse(backup_path, media_type="application/sql", filename=f"{backup_name}.sql")
+        except FileNotFoundError:
+            raise HTTPException(status_code=500, detail="pg_dump not found. Install PostgreSQL tools.")
 
 
 # =============================================

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import api from '../api'
 import PasswordInput from '../components/PasswordInput'
+import { getPasswordStrength, isValidEmail, isValidPhone, isValidName, isValidUsername } from '../utils/validation'
 
 export default function Signup() {
   const navigate = useNavigate()
@@ -73,6 +74,18 @@ export default function Signup() {
     }
     if (form.password !== form.confirm_password) {
       setError('Passwords do not match')
+      return
+    }
+    if (!isValidName(form.full_name)) {
+      setError('Enter a valid name (letters only, min 2 chars)')
+      return
+    }
+    if (form.email && !isValidEmail(form.email)) {
+      setError('Enter a valid email address')
+      return
+    }
+    if (form.phone && !isValidPhone(form.phone)) {
+      setError('Enter a valid phone number (e.g., 0300-1234567)')
       return
     }
 
@@ -196,10 +209,26 @@ export default function Signup() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Password *</label>
               <PasswordInput name="password" value={form.password} onChange={handleChange} placeholder="Min 6 chars" minLength={6} />
+              {form.password && (
+                <div className="mt-1.5">
+                  <div className="flex gap-1 mb-1">
+                    {[1,2,3,4,5].map(i => (
+                      <div key={i} className={`h-1 flex-1 rounded-full transition-all ${i <= getPasswordStrength(form.password).score ? getPasswordStrength(form.password).color : 'bg-slate-200'}`} />
+                    ))}
+                  </div>
+                  <span className="text-xs text-slate-500">{getPasswordStrength(form.password).label}</span>
+                </div>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password *</label>
               <PasswordInput name="confirm_password" value={form.confirm_password} onChange={handleChange} placeholder="Repeat password" />
+              {form.confirm_password && form.password !== form.confirm_password && (
+                <p className="text-xs text-red-500 mt-1">Passwords do not match</p>
+              )}
+              {form.confirm_password && form.password === form.confirm_password && (
+                <p className="text-xs text-green-500 mt-1">Passwords match</p>
+              )}
             </div>
           </div>
 

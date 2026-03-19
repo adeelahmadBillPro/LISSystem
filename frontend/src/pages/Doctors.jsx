@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import api from '../api'
+import { isValidName, isValidPhone, isValidEmail, sanitizeInput } from '../utils/validation'
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([])
@@ -21,8 +22,22 @@ export default function Doctors() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    // Validation
+    if (!form.name || !isValidName(form.name)) {
+      setError('Enter a valid doctor name (letters only, min 2 chars)')
+      return
+    }
+    if (form.phone && !isValidPhone(form.phone)) {
+      setError('Enter a valid phone number (e.g., 0300-1234567)')
+      return
+    }
+    if (form.email && !isValidEmail(form.email)) {
+      setError('Enter a valid email address')
+      return
+    }
+
     try {
-      await api.post('/doctors', form)
+      await api.post('/doctors', { ...form, name: sanitizeInput(form.name) })
       setForm({ name: '', specialization: '', phone: '', email: '' })
       setShowForm(false)
       fetchDoctors()
