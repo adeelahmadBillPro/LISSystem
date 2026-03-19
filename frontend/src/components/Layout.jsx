@@ -9,6 +9,7 @@ const navSections = [
       { path: '/', label: 'Dashboard', icon: '📊' },
       { path: '/samples', label: 'Samples', icon: '🧪' },
       { path: '/verification', label: 'Verification', icon: '✅' },
+      { path: '/token-queue', label: 'Token Queue', icon: '🎫' },
     ],
   },
   {
@@ -36,6 +37,8 @@ const navSections = [
       { path: '/packages', label: 'Test Packages', icon: '📦' },
       { path: '/categories', label: 'Categories', icon: '📂' },
       { path: '/branches', label: 'Branches', icon: '🏢' },
+      { path: '/inventory', label: 'Inventory', icon: '📦' },
+      { path: '/report-templates', label: 'Report Templates', icon: '📋' },
       { path: '/audit-log', label: 'Audit Log', icon: '📋' },
       { path: '/settings', label: 'Settings', icon: '⚙️' },
     ],

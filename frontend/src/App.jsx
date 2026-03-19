@@ -25,6 +25,9 @@ import PatientPortal from './pages/PatientPortal'
 import Branches from './pages/Branches'
 import Signup from './pages/Signup'
 import ForgotPassword from './pages/ForgotPassword'
+import TokenQueue from './pages/TokenQueue'
+import Inventory from './pages/Inventory'
+import ReportTemplates from './pages/ReportTemplates'
 
 export const ThemeContext = createContext()
 
@@ -76,6 +79,9 @@ export default function App() {
             <Route path="packages" element={<TestPackages />} />
             <Route path="categories" element={<Categories />} />
             <Route path="branches" element={<Branches />} />
+            <Route path="token-queue" element={<TokenQueue />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="report-templates" element={<ReportTemplates />} />
             <Route path="audit-log" element={<AuditLog />} />
             <Route path="settings" element={<Settings />} />
           </Route>

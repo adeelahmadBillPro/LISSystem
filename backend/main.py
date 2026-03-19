@@ -28,7 +28,11 @@ from loguru import logger
 from fastapi import Request
 from backend.config import get_settings
 from backend.database.connection import get_db
-from backend.database.models import Patient, Doctor, Sample, Result, User, ReferenceRange, Invoice, InvoiceItem, TestCatalog, Category, TestPackage, TestPackageItem, Branch, LabSettings
+from backend.database.models import (
+    Patient, Doctor, Sample, Result, User, ReferenceRange, Invoice, InvoiceItem,
+    TestCatalog, Category, TestPackage, TestPackageItem, Branch, LabSettings,
+    Token, InventoryItem, InventoryLog, ReportTemplate,
+)
 from backend.sms_service import send_report_ready_sms
 from backend.audit_service import AuditLog, log_action
 from backend.whatsapp_service import generate_whatsapp_link, send_whatsapp_report
@@ -1567,6 +1571,277 @@ async def delete_branch(branch_id: int, db: Session = Depends(get_db), current_u
     if not b:
         raise HTTPException(status_code=404, detail="Not found")
     b.is_active = False
+    db.commit()
+    return {"message": "Deleted"}
+
+
+# =============================================
+# TOKEN / QUEUE SYSTEM
+# =============================================
+
+@app.get("/api/tokens")
+async def list_tokens(
+    token_date: Optional[date] = None,
+    status_filter: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    target = token_date or date.today()
+    query = db.query(Token).filter(Token.date == target)
+    if status_filter:
+        query = query.filter(Token.status == status_filter)
+    tokens = query.order_by(Token.token_number).all()
+    return [
+        {
+            "id": t.id, "token_number": t.token_number, "patient_name": t.patient_name,
+            "phone": t.phone, "status": t.status, "counter": t.counter, "notes": t.notes,
+            "created_at": t.created_at, "called_at": t.called_at, "completed_at": t.completed_at,
+        }
+        for t in tokens
+    ]
+
+
+@app.post("/api/tokens")
+async def create_token(
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    today = date.today()
+    last = db.query(func.max(Token.token_number)).filter(Token.date == today).scalar() or 0
+    token = Token(
+        token_number=last + 1,
+        patient_name=sanitize(data.get("patient_name", "")),
+        phone=data.get("phone", ""),
+        counter=data.get("counter", "Counter 1"),
+        notes=data.get("notes", ""),
+        patient_id=data.get("patient_id"),
+        date=today,
+    )
+    db.add(token)
+    db.commit()
+    return {"token_number": token.token_number, "id": token.id}
+
+
+@app.put("/api/tokens/{token_id}/call")
+async def call_token(token_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    token = db.query(Token).filter(Token.id == token_id).first()
+    if not token:
+        raise HTTPException(status_code=404, detail="Token not found")
+    token.status = "in_progress"
+    token.called_at = datetime.utcnow()
+    db.commit()
+    return {"message": f"Token {token.token_number} called"}
+
+
+@app.put("/api/tokens/{token_id}/complete")
+async def complete_token(token_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    token = db.query(Token).filter(Token.id == token_id).first()
+    if not token:
+        raise HTTPException(status_code=404, detail="Token not found")
+    token.status = "completed"
+    token.completed_at = datetime.utcnow()
+    db.commit()
+    return {"message": f"Token {token.token_number} completed"}
+
+
+@app.put("/api/tokens/{token_id}/cancel")
+async def cancel_token(token_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    token = db.query(Token).filter(Token.id == token_id).first()
+    if not token:
+        raise HTTPException(status_code=404, detail="Token not found")
+    token.status = "cancelled"
+    db.commit()
+    return {"message": f"Token {token.token_number} cancelled"}
+
+
+@app.get("/api/tokens/current")
+async def get_current_token(db: Session = Depends(get_db)):
+    """Public endpoint — shows current serving token on display screen."""
+    today = date.today()
+    current = db.query(Token).filter(
+        Token.date == today, Token.status == "in_progress"
+    ).order_by(Token.called_at.desc()).first()
+
+    waiting = db.query(func.count(Token.id)).filter(
+        Token.date == today, Token.status == "waiting"
+    ).scalar() or 0
+
+    total = db.query(func.count(Token.id)).filter(Token.date == today).scalar() or 0
+
+    return {
+        "current_token": current.token_number if current else 0,
+        "current_counter": current.counter if current else "",
+        "current_patient": current.patient_name if current else "",
+        "waiting_count": waiting,
+        "total_today": total,
+    }
+
+
+# =============================================
+# INVENTORY MANAGEMENT
+# =============================================
+
+@app.get("/api/inventory")
+async def list_inventory(
+    category: Optional[str] = None,
+    low_stock: bool = False,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    query = db.query(InventoryItem).filter(InventoryItem.is_active == True)
+    if category:
+        query = query.filter(InventoryItem.category == category)
+    if low_stock:
+        query = query.filter(InventoryItem.quantity <= InventoryItem.min_quantity)
+    items = query.order_by(InventoryItem.category, InventoryItem.name).all()
+    return [
+        {
+            "id": i.id, "name": i.name, "category": i.category, "sku": i.sku,
+            "quantity": i.quantity, "min_quantity": i.min_quantity, "unit": i.unit,
+            "price_per_unit": float(i.price_per_unit) if i.price_per_unit else 0,
+            "supplier": i.supplier, "expiry_date": i.expiry_date.isoformat() if i.expiry_date else None,
+            "location": i.location, "is_low": i.quantity <= i.min_quantity,
+            "is_expired": i.expiry_date < date.today() if i.expiry_date else False,
+        }
+        for i in items
+    ]
+
+
+@app.post("/api/inventory")
+async def add_inventory_item(
+    data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    item = InventoryItem(
+        name=sanitize(data["name"]),
+        category=data.get("category", "Consumable"),
+        sku=data.get("sku"),
+        quantity=data.get("quantity", 0),
+        min_quantity=data.get("min_quantity", 10),
+        unit=data.get("unit", "pcs"),
+        price_per_unit=data.get("price_per_unit", 0),
+        supplier=data.get("supplier"),
+        expiry_date=data.get("expiry_date"),
+        location=data.get("location"),
+    )
+    db.add(item)
+    db.commit()
+    return {"message": "Item added", "id": item.id}
+
+
+@app.put("/api/inventory/{item_id}")
+async def update_inventory(
+    item_id: int, data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    item = db.query(InventoryItem).filter(InventoryItem.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    for key in ["name", "category", "sku", "quantity", "min_quantity", "unit",
+                "price_per_unit", "supplier", "expiry_date", "location"]:
+        if key in data:
+            setattr(item, key, data[key])
+    db.commit()
+    return {"message": "Updated"}
+
+
+@app.post("/api/inventory/{item_id}/stock")
+async def adjust_stock(
+    item_id: int, data: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    item = db.query(InventoryItem).filter(InventoryItem.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    action = data.get("action", "add")  # add, use, adjust
+    qty = int(data.get("quantity", 0))
+
+    if action == "add":
+        item.quantity += qty
+    elif action == "use":
+        if item.quantity < qty:
+            raise HTTPException(status_code=400, detail="Insufficient stock")
+        item.quantity -= qty
+    elif action == "adjust":
+        item.quantity = qty
+
+    log = InventoryLog(
+        item_id=item.id, action=action, quantity=qty,
+        notes=data.get("notes", ""), user_id=current_user.id,
+    )
+    db.add(log)
+    db.commit()
+    return {"message": f"Stock {action}: {qty} {item.unit}", "new_quantity": item.quantity}
+
+
+@app.delete("/api/inventory/{item_id}")
+async def delete_inventory(item_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    item = db.query(InventoryItem).filter(InventoryItem.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Not found")
+    item.is_active = False
+    db.commit()
+    return {"message": "Deleted"}
+
+
+# =============================================
+# REPORT TEMPLATES
+# =============================================
+
+@app.get("/api/report-templates")
+async def list_templates(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    templates = db.query(ReportTemplate).order_by(ReportTemplate.name).all()
+    return [
+        {
+            "id": t.id, "name": t.name, "test_panel": t.test_panel,
+            "header_text": t.header_text, "footer_text": t.footer_text,
+            "notes_text": t.notes_text, "show_qr": t.show_qr,
+            "show_signature": t.show_signature, "is_default": t.is_default,
+        }
+        for t in templates
+    ]
+
+
+@app.post("/api/report-templates")
+async def create_template(data: dict, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    tmpl = ReportTemplate(
+        name=sanitize(data["name"]),
+        test_panel=data.get("test_panel"),
+        header_text=data.get("header_text"),
+        footer_text=data.get("footer_text"),
+        notes_text=data.get("notes_text"),
+        show_qr=data.get("show_qr", True),
+        show_signature=data.get("show_signature", True),
+        is_default=data.get("is_default", False),
+    )
+    db.add(tmpl)
+    db.commit()
+    return {"message": "Template created", "id": tmpl.id}
+
+
+@app.put("/api/report-templates/{tmpl_id}")
+async def update_template(tmpl_id: int, data: dict, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    tmpl = db.query(ReportTemplate).filter(ReportTemplate.id == tmpl_id).first()
+    if not tmpl:
+        raise HTTPException(status_code=404, detail="Template not found")
+    for key in ["name", "test_panel", "header_text", "footer_text", "notes_text", "show_qr", "show_signature", "is_default"]:
+        if key in data:
+            setattr(tmpl, key, data[key])
+    db.commit()
+    return {"message": "Updated"}
+
+
+@app.delete("/api/report-templates/{tmpl_id}")
+async def delete_template(tmpl_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    tmpl = db.query(ReportTemplate).filter(ReportTemplate.id == tmpl_id).first()
+    if not tmpl:
+        raise HTTPException(status_code=404, detail="Not found")
+    db.delete(tmpl)
     db.commit()
     return {"message": "Deleted"}
 

@@ -210,6 +210,69 @@ class Branch(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class Token(Base):
+    __tablename__ = "tokens"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_number = Column(Integer, nullable=False)
+    patient_id = Column(Integer, ForeignKey("patients.id"), nullable=True)
+    patient_name = Column(String(200), nullable=True)
+    phone = Column(String(20), nullable=True)
+    status = Column(String(20), default="waiting")  # waiting, in_progress, completed, cancelled
+    counter = Column(String(20), nullable=True)  # e.g., "Counter 1", "Blood Draw"
+    notes = Column(Text, nullable=True)
+    date = Column(Date, default=date.today)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    called_at = Column(DateTime, nullable=True)
+    completed_at = Column(DateTime, nullable=True)
+
+
+class InventoryItem(Base):
+    __tablename__ = "inventory"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(200), nullable=False)
+    category = Column(String(50), nullable=True)  # Reagent, Consumable, Equipment
+    sku = Column(String(50), nullable=True)
+    quantity = Column(Integer, default=0)
+    min_quantity = Column(Integer, default=10)  # Alert when below this
+    unit = Column(String(20), default="pcs")  # pcs, ml, box, pack
+    price_per_unit = Column(Numeric(10, 2), default=0)
+    supplier = Column(String(200), nullable=True)
+    expiry_date = Column(Date, nullable=True)
+    location = Column(String(100), nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class InventoryLog(Base):
+    __tablename__ = "inventory_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    item_id = Column(Integer, ForeignKey("inventory.id"), nullable=False)
+    action = Column(String(20), nullable=False)  # add, use, adjust, expired
+    quantity = Column(Integer, nullable=False)
+    notes = Column(Text, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ReportTemplate(Base):
+    __tablename__ = "report_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False)
+    test_panel = Column(String(100), nullable=True)  # e.g., "CBC", "LFT"
+    header_text = Column(Text, nullable=True)
+    footer_text = Column(Text, nullable=True)
+    notes_text = Column(Text, nullable=True)
+    show_qr = Column(Boolean, default=True)
+    show_signature = Column(Boolean, default=True)
+    is_default = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class LabSettings(Base):
     __tablename__ = "lab_settings"
 
