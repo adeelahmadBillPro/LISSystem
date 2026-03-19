@@ -1463,21 +1463,48 @@ async def daily_closing_report(
     patients_count = db.query(func.count(func.distinct(Sample.patient_id))).filter(
         Sample.created_at.between(day_start, day_end)).scalar() or 0
 
+    # Get staff who created invoices
+    invoice_details = []
+    for inv in invoices:
+        patient = db.query(Patient).filter(Patient.id == inv.patient_id).first()
+        created_by = db.query(User).filter(User.id == inv.created_by).first() if inv.created_by else None
+        invoice_details.append({
+            "id": inv.id, "amount": float(inv.total_amount),
+            "method": inv.payment_method, "time": inv.created_at.strftime("%I:%M %p"),
+            "discount": inv.discount_percent,
+            "patient_name": patient.full_name if patient else "-",
+            "created_by": created_by.full_name if created_by else "System",
+        })
+
+    # Staff collection breakdown
+    by_staff = {}
+    for inv in invoices:
+        staff = db.query(User).filter(User.id == inv.created_by).first() if inv.created_by else None
+        name = staff.full_name if staff else "System"
+        by_staff[name] = by_staff.get(name, 0) + float(inv.total_amount)
+
+    # Login/logout activity
+    staff_activity = db.query(AuditLog).filter(
+        AuditLog.created_at.between(day_start, day_end),
+        AuditLog.action.in_(["LOGIN", "VERIFY", "WHATSAPP", "SMS"]),
+    ).order_by(AuditLog.created_at).all()
+
+    activity_log = [
+        {"time": a.created_at.strftime("%I:%M %p"), "user": a.username,
+         "action": a.action, "details": a.details or ""}
+        for a in staff_activity
+    ]
+
     return {
         "date": target_date.isoformat(),
         "total_invoices": len(invoices),
         "total_collection": total,
         "payment_breakdown": [{"method": k, "amount": v} for k, v in by_method.items()],
+        "staff_breakdown": [{"staff": k, "amount": v} for k, v in by_staff.items()],
         "samples_count": samples_count,
         "patients_count": patients_count,
-        "invoices": [
-            {
-                "id": inv.id, "amount": float(inv.total_amount),
-                "method": inv.payment_method, "time": inv.created_at.strftime("%I:%M %p"),
-                "discount": inv.discount_percent,
-            }
-            for inv in invoices
-        ],
+        "invoices": invoice_details,
+        "staff_activity": activity_log,
     }
 
 
