@@ -798,11 +798,100 @@ class LISApp:
         ttk.Button(win, text="Save", command=save).grid(row=5, column=1, padx=10, pady=20)
 
 
+# --- License Check on Startup ---
+def check_license_gui():
+    """Show license activation dialog if not licensed."""
+    from license_manager import verify_license, get_machine_id
+
+    result = verify_license()
+
+    if result["valid"]:
+        return True, result
+
+    # Show activation window
+    activation = Tk()
+    activation.title("LIS Reporter — Activation Required")
+    activation.geometry("500x350")
+    activation.configure(bg="#f0f2f5")
+    activation.resizable(False, False)
+
+    Label(activation, text="LIS Reporter", font=("Segoe UI", 18, "bold"), bg="#f0f2f5").pack(pady=(20, 5))
+    Label(activation, text="License Activation Required", font=("Segoe UI", 11), bg="#f0f2f5", fg="#666").pack()
+
+    Label(activation, text="Your Machine ID:", font=("Segoe UI", 9), bg="#f0f2f5", fg="#888").pack(pady=(20, 2))
+
+    machine_id = get_machine_id()
+    mid_entry = Entry(activation, font=("Consolas", 14), justify=CENTER, width=25, fg="#2563eb")
+    mid_entry.insert(0, machine_id)
+    mid_entry.configure(state="readonly")
+    mid_entry.pack(pady=5)
+
+    Label(activation, text="Send this Machine ID to your vendor to get a license file.",
+          font=("Segoe UI", 9), bg="#f0f2f5", fg="#666").pack(pady=5)
+
+    Label(activation, text=result.get("error", ""), font=("Segoe UI", 9), bg="#f0f2f5", fg="red",
+          wraplength=400).pack(pady=5)
+
+    def copy_id():
+        activation.clipboard_clear()
+        activation.clipboard_append(machine_id)
+        copy_btn.configure(text="Copied!")
+
+    def browse_license():
+        from tkinter import filedialog
+        filepath = filedialog.askopenfilename(
+            title="Select license.json file",
+            filetypes=[("License files", "*.json"), ("All files", "*.*")]
+        )
+        if filepath:
+            import shutil
+            shutil.copy2(filepath, "license.json")
+            result2 = verify_license()
+            if result2["valid"]:
+                messagebox.showinfo("Activated!", f"License activated for: {result2['lab_name']}\nExpiry: {result2['expiry']}")
+                activation.destroy()
+            else:
+                messagebox.showerror("Invalid", result2.get("error", "Invalid license"))
+
+    btn_frame = Frame(activation, bg="#f0f2f5")
+    btn_frame.pack(pady=15)
+
+    copy_btn = Button(btn_frame, text="Copy Machine ID", command=copy_id,
+                      bg="#2563eb", fg="white", font=("Segoe UI", 10), padx=15, pady=5, relief=FLAT, cursor="hand2")
+    copy_btn.pack(side=LEFT, padx=5)
+
+    Button(btn_frame, text="Load License File", command=browse_license,
+           bg="#16a34a", fg="white", font=("Segoe UI", 10), padx=15, pady=5, relief=FLAT, cursor="hand2").pack(side=LEFT, padx=5)
+
+    Button(btn_frame, text="Exit", command=activation.destroy,
+           bg="#dc2626", fg="white", font=("Segoe UI", 10), padx=15, pady=5, relief=FLAT, cursor="hand2").pack(side=LEFT, padx=5)
+
+    activated = [False]
+
+    def on_close():
+        activation.destroy()
+
+    activation.protocol("WM_DELETE_WINDOW", on_close)
+    activation.mainloop()
+
+    # Re-check after activation window closes
+    result = verify_license()
+    return result["valid"], result
+
+
 # --- Main ---
 if __name__ == "__main__":
     load_config()
     init_db()
 
+    # Check license
+    licensed, license_info = check_license_gui()
+
+    if not licensed:
+        sys.exit(0)
+
     root = Tk()
+    lab_name = license_info.get("lab_name", config.get("LAB", "name", fallback="Laboratory"))
+    root.title(f"LIS Reporter — {lab_name}")
     app = LISApp(root)
     root.mainloop()
