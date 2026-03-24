@@ -518,82 +518,125 @@ class LISApp:
     def create_machine_tab(self):
         frame = self.machine_tab
 
-        # Connection settings
-        conn_frame = ttk.LabelFrame(frame, text="Machine Connection", padding=10)
-        conn_frame.pack(fill=X, padx=10, pady=5)
+        # Machine list
+        machines_frame = ttk.LabelFrame(frame, text="Connected Machines", padding=10)
+        machines_frame.pack(fill=X, padx=10, pady=5)
 
-        ttk.Label(conn_frame, text="COM Port:").grid(row=0, column=0, padx=5)
-        self.port_var = StringVar(value=config.get('MACHINE', 'port', fallback='COM3'))
-        ttk.Entry(conn_frame, textvariable=self.port_var, width=10).grid(row=0, column=1, padx=5)
+        self.machine_configs = []
+        self.machine_status = []
+        self.machine_threads = {}
 
-        ttk.Label(conn_frame, text="Baud Rate:").grid(row=0, column=2, padx=5)
-        self.baud_var = StringVar(value=config.get('MACHINE', 'baud_rate', fallback='9600'))
-        ttk.Entry(conn_frame, textvariable=self.baud_var, width=10).grid(row=0, column=3, padx=5)
+        for i in range(1, 6):
+            section = f"MACHINE_{i}"
+            if config.has_section(section):
+                name = config.get(section, 'name', fallback=f'Machine {i}')
+                port = config.get(section, 'port', fallback=f'COM{i+2}')
+                baud = config.get(section, 'baud_rate', fallback='9600')
+                enabled = config.get(section, 'enabled', fallback='no').lower() == 'yes'
 
-        self.listen_btn = ttk.Button(conn_frame, text="Start Listening", command=self.toggle_listener)
-        self.listen_btn.grid(row=0, column=4, padx=20)
+                row = i - 1
+                ttk.Label(machines_frame, text=f"{name}:", font=("Segoe UI", 9, "bold")).grid(row=row, column=0, padx=5, sticky=W)
 
-        self.status_label = ttk.Label(conn_frame, text="Status: Stopped", foreground="red")
-        self.status_label.grid(row=0, column=5, padx=10)
+                port_var = StringVar(value=port)
+                ttk.Entry(machines_frame, textvariable=port_var, width=8).grid(row=row, column=1, padx=3)
+
+                baud_var = StringVar(value=baud)
+                ttk.Entry(machines_frame, textvariable=baud_var, width=8).grid(row=row, column=2, padx=3)
+
+                status_label = ttk.Label(machines_frame, text="Stopped", foreground="red", width=12)
+                status_label.grid(row=row, column=3, padx=5)
+
+                btn = ttk.Button(machines_frame, text="Start",
+                    command=lambda n=name, p=port_var, b=baud_var, s=status_label, bt=None, idx=i: self.toggle_machine(idx, n, p, b, s))
+                btn.grid(row=row, column=4, padx=5)
+
+                self.machine_configs.append({
+                    'index': i, 'name': name, 'port_var': port_var, 'baud_var': baud_var,
+                    'status_label': status_label, 'button': btn, 'enabled': enabled,
+                })
+
+        ttk.Button(machines_frame, text="Start All Enabled", command=self.start_all_machines).grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+        ttk.Button(machines_frame, text="Stop All", command=self.stop_all_machines).grid(row=5, column=2, columnspan=2, padx=5, pady=5)
 
         # Log
         log_frame = ttk.LabelFrame(frame, text="Machine Log", padding=5)
         log_frame.pack(fill=BOTH, expand=True, padx=10, pady=5)
 
-        self.log_text = Text(log_frame, height=20, font=("Consolas", 9), bg="#1e1e1e", fg="#00ff00")
+        self.log_text = Text(log_frame, height=15, font=("Consolas", 9), bg="#1e1e1e", fg="#00ff00")
         self.log_text.pack(fill=BOTH, expand=True)
-        self.log("LIS Reporter ready. Connect machine and click 'Start Listening'.")
+        self.log("LIS Reporter ready. Connect machines and click 'Start'.")
 
     def log(self, message):
         timestamp = datetime.now().strftime("%H:%M:%S")
         self.log_text.insert(END, f"[{timestamp}] {message}\n")
         self.log_text.see(END)
 
-    def toggle_listener(self):
-        if self.listener_running:
-            self.listener_running = False
-            self.listen_btn.config(text="Start Listening")
-            self.status_label.config(text="Status: Stopped", foreground="red")
-            self.log("Listener stopped.")
+    def toggle_machine(self, idx, name, port_var, baud_var, status_label):
+        if idx in self.machine_threads and self.machine_threads[idx].get('running'):
+            # Stop
+            self.machine_threads[idx]['running'] = False
+            status_label.config(text="Stopped", foreground="red")
+            self.log(f"[{name}] Stopped")
         else:
-            self.listener_running = True
-            self.listen_btn.config(text="Stop Listening")
-            self.status_label.config(text="Status: Listening...", foreground="green")
-            self.log(f"Listening on {self.port_var.get()} at {self.baud_var.get()} baud...")
+            # Start
+            self.machine_threads[idx] = {'running': True}
+            status_label.config(text="Listening...", foreground="green")
+            port = port_var.get()
+            baud = int(baud_var.get())
+            self.log(f"[{name}] Listening on {port} at {baud} baud...")
 
-            thread = threading.Thread(target=self.serial_listener, daemon=True)
+            thread = threading.Thread(
+                target=self.serial_listener,
+                args=(idx, name, port, baud, status_label),
+                daemon=True,
+            )
             thread.start()
 
-    def serial_listener(self):
+    def start_all_machines(self):
+        for mc in self.machine_configs:
+            if mc['enabled'] and (mc['index'] not in self.machine_threads or not self.machine_threads[mc['index']].get('running')):
+                self.toggle_machine(mc['index'], mc['name'], mc['port_var'], mc['baud_var'], mc['status_label'])
+
+    def stop_all_machines(self):
+        for idx in list(self.machine_threads.keys()):
+            if self.machine_threads[idx].get('running'):
+                self.machine_threads[idx]['running'] = False
+        for mc in self.machine_configs:
+            mc['status_label'].config(text="Stopped", foreground="red")
+        self.log("All machines stopped.")
+
+    def serial_listener(self, idx, name, port, baud, status_label):
         try:
             import serial
-            port = self.port_var.get()
-            baud = int(self.baud_var.get())
-
             ser = serial.Serial(port=port, baudrate=baud, timeout=1)
-            self.log(f"Connected to {port}")
+            self.root.after(0, self.log, f"[{name}] Connected to {port}")
 
             buffer = b""
-            while self.listener_running:
-                if ser.in_waiting > 0:
-                    data = ser.read(ser.in_waiting)
-                    buffer += data
+            while self.machine_threads.get(idx, {}).get('running', False):
+                try:
+                    if ser.in_waiting > 0:
+                        data = ser.read(ser.in_waiting)
+                        buffer += data
 
-                    # Check for complete message
-                    if b"\x1c\r" in buffer or (b"MSH|" in buffer and buffer.endswith(b"\r")):
-                        message = buffer.decode("ascii", errors="replace").strip("\x0b\x1c\r\n")
-                        if message:
-                            self.root.after(0, self.process_message, message)
-                        buffer = b""
-                else:
-                    time.sleep(0.1)
+                        if b"\x1c\r" in buffer or (b"MSH|" in buffer and buffer.endswith(b"\r")):
+                            message = buffer.decode("ascii", errors="replace").strip("\x0b\x1c\r\n")
+                            if message:
+                                self.root.after(0, self.process_message, message)
+                                self.root.after(0, self.log, f"[{name}] Message received ({len(message)} bytes)")
+                            buffer = b""
+                    else:
+                        time.sleep(0.1)
+                except Exception as e:
+                    self.root.after(0, self.log, f"[{name}] Read error: {str(e)}")
+                    time.sleep(2)
 
             ser.close()
+            self.root.after(0, self.log, f"[{name}] Disconnected")
         except ImportError:
-            self.root.after(0, self.log, "ERROR: pyserial not installed. Run: pip install pyserial")
+            self.root.after(0, self.log, f"[{name}] ERROR: pyserial not installed")
         except Exception as e:
-            self.root.after(0, self.log, f"ERROR: {str(e)}")
-            self.root.after(0, lambda: self.status_label.config(text="Status: Error", foreground="red"))
+            self.root.after(0, self.log, f"[{name}] ERROR: {str(e)}")
+            self.root.after(0, lambda: status_label.config(text="Error", foreground="red"))
 
     def process_message(self, raw_message):
         self.log(f"Received message ({len(raw_message)} bytes)")
