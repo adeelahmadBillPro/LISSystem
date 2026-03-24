@@ -937,4 +937,9 @@ if __name__ == "__main__":
     lab_name = license_info.get("lab_name", config.get("LAB", "name", fallback="Laboratory"))
     root.title(f"LIS Reporter — {lab_name}")
     app = LISApp(root)
+
+    # Auto-start machine listeners if enabled in config
+    if config.get('APP', 'auto_start_listeners', fallback='no').lower() == 'yes':
+        root.after(1000, app.start_all_machines)  # Start after 1 second
+
     root.mainloop()
