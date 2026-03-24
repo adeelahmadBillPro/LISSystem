@@ -653,8 +653,22 @@ class LISApp:
         # Find or create sample
         sample = conn.execute("SELECT * FROM samples WHERE sample_id = ?", (parsed['sample_id'],)).fetchone()
         if not sample:
-            # Find patient by ID
+            # Find patient by ID in local DB
             patient = conn.execute("SELECT * FROM patients WHERE mrn = ?", (parsed['patient_id'],)).fetchone()
+
+            # If not found locally, try client's external database
+            if not patient and config.has_section('CLIENT_DB') and config.get('CLIENT_DB', 'enabled', fallback='no').lower() == 'yes':
+                self.log(f"Patient {parsed['patient_id']} not in local DB. Checking client database...")
+                try:
+                    from db_connector import sync_patients_from_client_db
+                    sync_patients_from_client_db(config, DB_PATH)
+                    patient = conn.execute("SELECT * FROM patients WHERE mrn = ?", (parsed['patient_id'],)).fetchone()
+                    if patient:
+                        self.log(f"Found patient in client DB: {patient['name']}")
+                        self.refresh_patients()
+                except Exception as e:
+                    self.log(f"Client DB lookup failed: {str(e)}")
+
             if patient:
                 conn.execute("INSERT INTO samples (sample_id, patient_id, status, machine_id) VALUES (?, ?, 'completed', 'AUTO')",
                     (parsed['sample_id'], patient['id']))
@@ -812,6 +826,35 @@ class LISApp:
         self.refresh_samples()
         self.generate_report_auto(sample_id)
 
+    def sync_client_db(self):
+        """Sync patients from client's existing database."""
+        try:
+            from db_connector import sync_patients_from_client_db, test_connection
+
+            # Test connection first
+            ok, msg = test_connection(config)
+            if not ok:
+                self.log(f"Client DB: {msg}")
+                return
+
+            # Sync patients
+            count, message = sync_patients_from_client_db(config, DB_PATH)
+            self.log(f"Client DB Sync: {message}")
+            if count > 0:
+                self.refresh_patients()
+        except ImportError as e:
+            self.log(f"Client DB: Missing driver — {str(e)}")
+        except Exception as e:
+            self.log(f"Client DB Error: {str(e)}")
+
+    def auto_sync_loop(self):
+        """Auto-sync from client DB at configured interval."""
+        if config.has_section('CLIENT_DB') and config.get('CLIENT_DB', 'enabled', fallback='no').lower() == 'yes':
+            interval = int(config.get('CLIENT_DB', 'sync_interval', fallback='5'))
+            if interval > 0:
+                self.sync_client_db()
+                self.root.after(interval * 60 * 1000, self.auto_sync_loop)
+
     def show_settings(self):
         win = Toplevel(self.root)
         win.title("Settings")
@@ -940,6 +983,9 @@ if __name__ == "__main__":
 
     # Auto-start machine listeners if enabled in config
     if config.get('APP', 'auto_start_listeners', fallback='no').lower() == 'yes':
-        root.after(1000, app.start_all_machines)  # Start after 1 second
+        root.after(1000, app.start_all_machines)
+
+    # Auto-sync from client's database
+    root.after(2000, app.auto_sync_loop)
 
     root.mainloop()
