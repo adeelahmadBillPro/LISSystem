@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import api from '../api'
+import ModalPortal from '../components/ModalPortal'
 
 export default function Inventory() {
   const [items, setItems] = useState([])
@@ -173,6 +174,7 @@ export default function Inventory() {
 
       {/* Stock Modal */}
       {stockModal && (
+        <ModalPortal>
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm animate-scaleIn">
             <h3 className="font-bold text-lg mb-4">Adjust Stock: {stockModal.name}</h3>
@@ -194,6 +196,7 @@ export default function Inventory() {
             </div>
           </div>
         </div>
+        </ModalPortal>
       )}
     </div>
   )
