@@ -30,12 +30,39 @@ COLOR_HEADER_BG = colors.Color(0.1, 0.3, 0.6)  # Dark blue
 COLOR_ROW_ALT = colors.Color(0.95, 0.95, 0.98)  # Light blue-grey
 
 
+def _resolve_template_vars(text: str, patient: dict, sample: dict, lab: dict) -> str:
+    """Replace {{variable}} placeholders in template text."""
+    if not text:
+        return text or ""
+    from datetime import datetime as _dt
+    mapping = {
+        "patient_name":   patient.get("name", ""),
+        "patient_age":    str(patient.get("age", "")),
+        "patient_gender": patient.get("gender", ""),
+        "patient_mrn":    patient.get("mrn", ""),
+        "patient_phone":  patient.get("phone", ""),
+        "sample_id":      sample.get("sample_id", ""),
+        "test_panel":     sample.get("test_panel", ""),
+        "doctor_name":    sample.get("doctor_name", ""),
+        "lab_name":       lab.get("name", ""),
+        "lab_phone":      lab.get("phone", ""),
+        "lab_address":    lab.get("address", ""),
+        "date":           _dt.now().strftime("%d-%b-%Y"),
+        "time":           _dt.now().strftime("%I:%M %p"),
+    }
+    for key, val in mapping.items():
+        text = text.replace("{{" + key + "}}", val)
+    return text
+
+
 def generate_report(
     patient: dict,
     sample: dict,
     results: list[dict],
     output_path: str,
     logo_path: Optional[str] = None,
+    lab_info: Optional[dict] = None,
+    template: Optional[dict] = None,
     technician_sig: Optional[str] = None,
     pathologist_sig: Optional[str] = None,
     technician_name: Optional[str] = None,
@@ -55,6 +82,11 @@ def generate_report(
         The output file path
     """
     settings = get_settings()
+    # Use dynamic lab_info from DB settings if provided, else fall back to config
+    _lab_name    = (lab_info or {}).get("name",    settings.LAB_NAME)
+    _lab_address = (lab_info or {}).get("address", settings.LAB_ADDRESS)
+    _lab_phone   = (lab_info or {}).get("phone",   settings.LAB_PHONE)
+    _lab_email   = (lab_info or {}).get("email",   settings.LAB_EMAIL)
 
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
@@ -102,10 +134,10 @@ def generate_report(
         logo = Image(logo_path, width=25 * mm, height=25 * mm)
         elements.append(logo)
 
-    elements.append(Paragraph(settings.LAB_NAME, styles["LabTitle"]))
-    elements.append(Paragraph(settings.LAB_ADDRESS, styles["LabSubtitle"]))
+    elements.append(Paragraph(_lab_name, styles["LabTitle"]))
+    elements.append(Paragraph(_lab_address, styles["LabSubtitle"]))
     elements.append(Paragraph(
-        f"Phone: {settings.LAB_PHONE} | Email: {settings.LAB_EMAIL}",
+        f"Phone: {_lab_phone} | Email: {_lab_email}",
         styles["LabSubtitle"],
     ))
     elements.append(HRFlowable(
@@ -150,6 +182,16 @@ def generate_report(
     ]))
     elements.append(patient_table)
     elements.append(Spacer(1, 4 * mm))
+
+    # === TEMPLATE HEADER TEXT ===
+    _lab_ctx = {"name": _lab_name, "phone": _lab_phone, "address": _lab_address, "email": _lab_email}
+    if template and template.get("header_text"):
+        resolved = _resolve_template_vars(template["header_text"], patient, sample, _lab_ctx)
+        elements.append(Paragraph(resolved, ParagraphStyle(
+            "TmplHeader", parent=styles["Normal"],
+            fontSize=9, textColor=colors.Color(0.2, 0.2, 0.5),
+            spaceAfter=3 * mm, spaceBefore=1 * mm,
+        )))
 
     # === RESULTS TABLE ===
     elements.append(Paragraph("Test Results", styles["SectionHeader"]))
@@ -250,7 +292,21 @@ def generate_report(
         legend_style,
     ))
 
+    # === TEMPLATE NOTES TEXT ===
+    if template and template.get("notes_text"):
+        resolved_notes = _resolve_template_vars(template["notes_text"], patient, sample, _lab_ctx)
+        elements.append(Spacer(1, 3 * mm))
+        elements.append(Paragraph("<b>Notes:</b>", ParagraphStyle(
+            "NotesLabel", parent=styles["Normal"], fontSize=9,
+            textColor=COLOR_HEADER_BG, spaceBefore=2 * mm,
+        )))
+        elements.append(Paragraph(resolved_notes, ParagraphStyle(
+            "NotesBody", parent=styles["Normal"],
+            fontSize=8, textColor=colors.black, spaceAfter=3 * mm,
+        )))
+
     # === FOOTER: Signature ===
+    _show_signature = True if (template is None or template.get("show_signature", True)) else False
     elements.append(Spacer(1, 15 * mm))
     elements.append(HRFlowable(
         width="100%", thickness=0.5, color=colors.grey,
@@ -258,70 +314,80 @@ def generate_report(
     ))
 
     # Build signature cells — use images if available, otherwise blank lines
-    tech_sig_cell = ""
-    path_sig_cell = ""
+    if _show_signature:
+        tech_sig_cell = ""
+        path_sig_cell = ""
 
-    if technician_sig and os.path.exists(technician_sig):
-        tech_sig_cell = Image(technician_sig, width=35 * mm, height=15 * mm)
-    else:
-        tech_sig_cell = Paragraph("_________________________", styles["Normal"])
+        if technician_sig and os.path.exists(technician_sig):
+            tech_sig_cell = Image(technician_sig, width=35 * mm, height=15 * mm)
+        else:
+            tech_sig_cell = Paragraph("_________________________", styles["Normal"])
 
-    if pathologist_sig and os.path.exists(pathologist_sig):
-        path_sig_cell = Image(pathologist_sig, width=35 * mm, height=15 * mm)
-    else:
-        path_sig_cell = Paragraph("_________________________", styles["Normal"])
+        if pathologist_sig and os.path.exists(pathologist_sig):
+            path_sig_cell = Image(pathologist_sig, width=35 * mm, height=15 * mm)
+        else:
+            path_sig_cell = Paragraph("_________________________", styles["Normal"])
 
-    tech_label = technician_name or "Lab Technician"
-    path_label = pathologist_name or "Pathologist / Verified By"
+        tech_label = technician_name or "Lab Technician"
+        path_label = pathologist_name or "Pathologist / Verified By"
 
-    sig_data = [
-        [tech_sig_cell, path_sig_cell],
-        [tech_label, path_label],
-        ["Date: _______________", "Date: _______________"],
-    ]
-    sig_table = Table(sig_data, colWidths=[90 * mm, 90 * mm])
-    sig_table.setStyle(TableStyle([
-        ("ALIGN", (0, 0), (0, -1), "LEFT"),
-        ("ALIGN", (1, 0), (1, -1), "RIGHT"),
-        ("FONTSIZE", (0, 0), (-1, -1), 9),
-        ("TEXTCOLOR", (0, 0), (-1, -1), colors.grey),
-        ("TOPPADDING", (0, 0), (-1, -1), 2),
-    ]))
-    elements.append(sig_table)
+        sig_data = [
+            [tech_sig_cell, path_sig_cell],
+            [tech_label, path_label],
+            ["Date: _______________", "Date: _______________"],
+        ]
+        sig_table = Table(sig_data, colWidths=[90 * mm, 90 * mm])
+        sig_table.setStyle(TableStyle([
+            ("ALIGN", (0, 0), (0, -1), "LEFT"),
+            ("ALIGN", (1, 0), (1, -1), "RIGHT"),
+            ("FONTSIZE", (0, 0), (-1, -1), 9),
+            ("TEXTCOLOR", (0, 0), (-1, -1), colors.grey),
+            ("TOPPADDING", (0, 0), (-1, -1), 2),
+        ]))
+        elements.append(sig_table)
 
     # === QR CODE for verification ===
-    try:
-        from backend.qr_service import generate_qr_data, generate_qr_image
-        qr_data = generate_qr_data(
-            sample.get("sample_id", ""),
-            patient.get("name", ""),
-        )
-        qr_path = generate_qr_image(qr_data)
-        if qr_path and os.path.exists(qr_path):
-            elements.append(Spacer(1, 3 * mm))
-            qr_table = Table(
-                [[Image(qr_path, width=22 * mm, height=22 * mm),
-                  Paragraph(
-                      '<font size="7" color="grey">Scan to verify this report<br/>'
-                      f'<font size="6">{qr_data}</font></font>',
-                      styles["Normal"],
-                  )]],
-                colWidths=[28 * mm, 150 * mm],
+    _show_qr = True if (template is None or template.get("show_qr", True)) else False
+    if _show_qr:
+        try:
+            from backend.qr_service import generate_qr_data, generate_qr_image
+            qr_data = generate_qr_data(
+                sample.get("sample_id", ""),
+                patient.get("name", ""),
             )
-            qr_table.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
-            elements.append(qr_table)
-    except Exception:
-        pass  # QR code is optional
+            qr_path = generate_qr_image(qr_data)
+            if qr_path and os.path.exists(qr_path):
+                elements.append(Spacer(1, 3 * mm))
+                qr_table = Table(
+                    [[Image(qr_path, width=22 * mm, height=22 * mm),
+                      Paragraph(
+                          '<font size="7" color="grey">Scan to verify this report<br/>'
+                          f'<font size="6">{qr_data}</font></font>',
+                          styles["Normal"],
+                      )]],
+                    colWidths=[28 * mm, 150 * mm],
+                )
+                qr_table.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
+                elements.append(qr_table)
+        except Exception:
+            pass  # QR code is optional
 
-    # === DISCLAIMER ===
+    # === TEMPLATE FOOTER TEXT (or default disclaimer) ===
     elements.append(Spacer(1, 5 * mm))
-    elements.append(Paragraph(
-        "This report is generated electronically and is valid without signature. "
-        "Results should be correlated clinically. "
-        "Please consult your physician for interpretation.",
-        ParagraphStyle("Disclaimer", parent=styles["Normal"],
-                       fontSize=7, textColor=colors.grey, alignment=TA_CENTER),
-    ))
+    if template and template.get("footer_text"):
+        resolved_footer = _resolve_template_vars(template["footer_text"], patient, sample, _lab_ctx)
+        elements.append(Paragraph(resolved_footer, ParagraphStyle(
+            "TmplFooter", parent=styles["Normal"],
+            fontSize=8, textColor=colors.grey, alignment=TA_CENTER,
+        )))
+    else:
+        elements.append(Paragraph(
+            "This report is generated electronically and is valid without signature. "
+            "Results should be correlated clinically. "
+            "Please consult your physician for interpretation.",
+            ParagraphStyle("Disclaimer", parent=styles["Normal"],
+                           fontSize=7, textColor=colors.grey, alignment=TA_CENTER),
+        ))
 
     # Build PDF with page number footer
     doc.build(elements, onFirstPage=_add_page_number, onLaterPages=_add_page_number)

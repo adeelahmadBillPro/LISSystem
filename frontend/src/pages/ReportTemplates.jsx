@@ -52,6 +52,25 @@ export default function ReportTemplates() {
 
       {showForm && (
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border p-6 mb-6 animate-slideDown">
+          {/* Variable cheatsheet */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-5">
+            <p className="text-xs font-bold text-blue-700 mb-2">📌 Available Variables — use in Header, Notes, Footer text:</p>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                '{{patient_name}}','{{patient_age}}','{{patient_gender}}','{{patient_mrn}}','{{patient_phone}}',
+                '{{sample_id}}','{{test_panel}}','{{doctor_name}}',
+                '{{lab_name}}','{{lab_phone}}','{{lab_address}}',
+                '{{date}}','{{time}}',
+              ].map(v => (
+                <code key={v} onClick={() => navigator.clipboard?.writeText(v)}
+                  className="px-2 py-0.5 bg-white border border-blue-200 rounded text-xs text-blue-700 cursor-pointer hover:bg-blue-100 select-all" title="Click to copy">
+                  {v}
+                </code>
+              ))}
+            </div>
+            <p className="text-[10px] text-blue-500 mt-2">Click any variable to copy. Variables are replaced with real patient/lab data in the PDF.</p>
+          </div>
+
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Template Name *</label>

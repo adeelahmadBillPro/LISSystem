@@ -27,10 +27,11 @@ export default function DataExport() {
     } finally { setLoading('') }
   }
 
+  const today = new Date().toISOString().slice(0, 10)
   const exports = [
-    { endpoint: '/export/patients', filename: 'patients_export.csv', label: 'Patients', desc: 'All patient records', icon: '👥', color: 'blue' },
-    { endpoint: '/export/results', filename: 'results_export.csv', label: 'Test Results', desc: 'All test results with patient info', icon: '🧪', color: 'green' },
-    { endpoint: '/export/invoices', filename: 'invoices_export.csv', label: 'Invoices', desc: 'All billing invoices', icon: '💰', color: 'purple' },
+    { endpoint: '/export/patients', filename: `patients_${today}.csv`, label: 'Patients', desc: 'All patient records', icon: '👥', color: 'blue' },
+    { endpoint: '/export/results', filename: `results_${today}.csv`, label: 'Test Results', desc: 'All test results with patient info', icon: '🧪', color: 'green' },
+    { endpoint: '/export/invoices', filename: `invoices_${today}.csv`, label: 'Invoices', desc: 'All billing invoices', icon: '💰', color: 'purple' },
   ]
 
   return (

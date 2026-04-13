@@ -41,6 +41,8 @@ export default function Users() {
     receptionist: 'bg-purple-100 text-purple-700',
   }
 
+  const pendingUsers = users.filter(u => !u.is_active)
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -52,6 +54,16 @@ export default function Users() {
           {showForm ? 'Cancel' : '+ Add User'}
         </button>
       </div>
+
+      {pendingUsers.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2">
+          <span className="text-lg">⏳</span>
+          <span>
+            <strong>{pendingUsers.length} user{pendingUsers.length > 1 ? 's' : ''} pending activation.</strong>
+            {' '}These accounts were registered but are not yet active. Click <strong>Activate</strong> to grant access.
+          </span>
+        </div>
+      )}
 
       {error && <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
       {success && <div className="bg-green-50 text-green-600 px-4 py-3 rounded-lg mb-4 text-sm">{success}</div>}
@@ -116,7 +128,7 @@ export default function Users() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {users.map((u) => (
-              <tr key={u.id} className={`hover:bg-slate-50 ${!u.is_active ? 'opacity-60' : ''}`}>
+              <tr key={u.id} className={`hover:bg-slate-50 ${!u.is_active ? 'bg-amber-50/40' : ''}`}>
                 <td className="px-6 py-4 font-medium">{u.full_name}</td>
                 <td className="px-6 py-4">{u.username}</td>
                 <td className="px-6 py-4">
@@ -125,8 +137,10 @@ export default function Users() {
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${u.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                    {u.is_active ? 'Active' : 'Disabled'}
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    u.is_active ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                  }`}>
+                    {u.is_active ? 'Active' : 'Pending'}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-slate-500">
@@ -140,14 +154,16 @@ export default function Users() {
                           try {
                             await api.put(`/users/${u.id}/toggle`)
                             fetchUsers()
-                            setSuccess(`${u.full_name} ${u.is_active ? 'disabled' : 'enabled'}`)
+                            setSuccess(`${u.full_name} ${u.is_active ? 'disabled' : 'activated'}`)
                           } catch (err) { setError('Failed to update') }
                         }}
                         className={`px-3 py-1 rounded text-xs font-medium ${
-                          u.is_active ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-green-50 text-green-600 hover:bg-green-100'
+                          u.is_active
+                            ? 'bg-red-50 text-red-600 hover:bg-red-100'
+                            : 'bg-amber-50 text-amber-700 hover:bg-amber-100 font-semibold'
                         }`}
                       >
-                        {u.is_active ? 'Disable' : 'Enable'}
+                        {u.is_active ? 'Disable' : 'Activate'}
                       </button>
                       <button
                         onClick={async () => {

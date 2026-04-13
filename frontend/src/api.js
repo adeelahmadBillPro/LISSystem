@@ -13,14 +13,18 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Handle 401 errors (redirect to login)
+// Handle 401 errors (redirect to login, but not if already on a public page)
+const PUBLIC_PATHS = ['/login', '/signup', '/forgot-password', '/portal', '/landing']
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      window.location.href = '/login'
+      const isPublic = PUBLIC_PATHS.some(p => window.location.pathname.startsWith(p))
+      if (!isPublic) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }

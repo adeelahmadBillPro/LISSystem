@@ -6,6 +6,7 @@ export default function Samples() {
   const [samples, setSamples] = useState([])
   const [loading, setLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('')
+  const [search, setSearch] = useState('')
 
   useEffect(() => { fetchSamples() }, [statusFilter])
 
@@ -30,6 +31,20 @@ export default function Samples() {
     printed: 'bg-slate-100 text-slate-700',
   }
 
+  const getTatColor = (tat) => {
+    if (tat === null || tat === undefined) return 'text-slate-400'
+    if (tat < 4) return 'text-green-600 font-medium'
+    if (tat <= 8) return 'text-yellow-600 font-medium'
+    return 'text-red-600 font-medium'
+  }
+
+  const filteredSamples = samples.filter(s => {
+    if (!search) return true
+    const q = search.toLowerCase()
+    return (s.sample_id || '').toLowerCase().includes(q) ||
+           (s.patient_name || '').toLowerCase().includes(q)
+  })
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -37,6 +52,16 @@ export default function Samples() {
         <Link to="/samples/new" className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
           + New Sample
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="mb-4">
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search by Sample ID or patient name..."
+          className="w-full max-w-sm px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
       {/* Status Filters */}
@@ -61,17 +86,20 @@ export default function Samples() {
           <thead className="bg-slate-50">
             <tr>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Sample ID</th>
+              <th className="text-left px-6 py-3 text-slate-600 font-medium">Patient</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Test Panel</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Status</th>
+              <th className="text-left px-6 py-3 text-slate-600 font-medium">TAT</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Machine</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Date</th>
               <th className="text-left px-6 py-3 text-slate-600 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {samples.map((s) => (
+            {filteredSamples.map((s) => (
               <tr key={s.id} className="hover:bg-slate-50">
                 <td className="px-6 py-4 font-medium">{s.sample_id}</td>
+                <td className="px-6 py-4 text-slate-700">{s.patient_name || '-'}</td>
                 <td className="px-6 py-4">{s.test_panel || '-'}</td>
                 <td className="px-6 py-4">
                   <select
@@ -93,6 +121,11 @@ export default function Samples() {
                     <option value="printed">Printed</option>
                   </select>
                 </td>
+                <td className="px-6 py-4 text-xs">
+                  {s.tat_hours != null
+                    ? <span className={getTatColor(s.tat_hours)}>{s.tat_hours.toFixed(1)}h</span>
+                    : <span className="text-slate-300">—</span>}
+                </td>
                 <td className="px-6 py-4 text-slate-500">{s.machine_id || '-'}</td>
                 <td className="px-6 py-4 text-slate-500">{new Date(s.created_at).toLocaleDateString()}</td>
                 <td className="px-6 py-4 space-x-2">
@@ -104,8 +137,8 @@ export default function Samples() {
                 </td>
               </tr>
             ))}
-            {!loading && samples.length === 0 && (
-              <tr><td colSpan="6" className="px-6 py-8 text-center text-slate-400">No samples found</td></tr>
+            {!loading && filteredSamples.length === 0 && (
+              <tr><td colSpan="8" className="px-6 py-8 text-center text-slate-400">No samples found</td></tr>
             )}
           </tbody>
         </table>

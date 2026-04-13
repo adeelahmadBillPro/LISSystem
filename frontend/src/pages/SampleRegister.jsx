@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import api from '../api'
 
 export default function SampleRegister() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [patients, setPatients] = useState([])
   const [doctors, setDoctors] = useState([])
   const [panels, setPanels] = useState([])
@@ -31,6 +32,23 @@ export default function SampleRegister() {
         { name: 'Blood Sugar' }, { name: 'HbA1c' }, { name: 'Urine R/E' },
       ])
     })
+  }, [])
+
+  // Auto-select patient when navigated from OPD (?patient_id=X)
+  useEffect(() => {
+    const pid = searchParams.get('patient_id')
+    if (pid) {
+      api.get('/patients', { params: { search: pid } })
+        .then(r => {
+          const found = r.data.find(p => String(p.id) === String(pid))
+          if (found) {
+            setSelectedPatient(found)
+            setForm(prev => ({ ...prev, patient_id: found.id }))
+            setPatientSearch(`${found.mrn} - ${found.full_name}`)
+          }
+        })
+        .catch(() => {})
+    }
   }, [])
 
   // Search patients as user types
@@ -77,6 +95,11 @@ export default function SampleRegister() {
         doctor_id: form.doctor_id ? parseInt(form.doctor_id) : null,
       }
       await api.post('/samples', data)
+      // Auto-complete appointment if we came from one
+      const apptId = searchParams.get('appt_id')
+      if (apptId) {
+        api.put(`/appointments/${apptId}`, { status: 'completed' }).catch(() => {})
+      }
       navigate('/')
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to create sample')

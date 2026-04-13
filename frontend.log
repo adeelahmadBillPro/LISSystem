@@ -1,0 +1,566 @@
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m747[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m3000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.100.49:[1m3000[22m/[39m
+[2m5:46:09 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m6:10:07 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m7:43:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:44:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m7:45:06 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m7:45:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m7:45:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m7:45:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m7:45:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Signup.jsx, /src/index.css[22m
+[2m7:45:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m7:46:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:46:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:49:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:49:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:50:03 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:50:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:50:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:50:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:51:03 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:51:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:51:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m7:56:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m7:57:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m7:58:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m7:58:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m7:58:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login.jsx, /src/index.css[22m
+[2m8:05:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/QAChecklist.jsx, /src/index.css[22m
+[2m8:07:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:07:53 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:08:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:08:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:08:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:08:56 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:09:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:11:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:11:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:11:58 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:46:58 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:47:11 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:51:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:51:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:51:48 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:51:58 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:52:06 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:54:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:55:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:55:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:55:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:55:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:59:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m8:59:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:00:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/QAChecklist.jsx, /src/index.css[22m
+[2m9:05:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:05:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:08:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:08:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:17:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m9:26:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:28:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m9:28:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:28:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m9:36:25 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:36:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m9:41:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m9:41:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Radiology.jsx, /src/index.css[22m
+[2m9:41:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:41:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m9:41:40 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m9:41:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Radiology.jsx, /src/index.css[22m
+[2m9:41:53 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Radiology.jsx, /src/index.css[22m
+[2m9:41:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Radiology.jsx, /src/index.css[22m
+[2m9:42:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:42:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:42:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:42:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:42:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m9:43:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:43:40 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m9:43:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ShiftManagement.jsx, /src/index.css[22m
+[2m9:43:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:43:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:43:56 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:44:03 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:44:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:44:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m9:44:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m9:44:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m9:44:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ShiftManagement.jsx, /src/index.css[22m
+[2m9:44:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ShiftManagement.jsx, /src/index.css[22m
+[2m9:45:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/CreditAccounts.jsx, /src/index.css[22m
+[2m9:45:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/CreditAccounts.jsx, /src/index.css[22m
+[2m9:45:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/CreditAccounts.jsx, /src/index.css[22m
+[2m9:45:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/CreditAccounts.jsx, /src/index.css[22m
+[2m9:45:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/InsuranceClaims.jsx, /src/index.css[22m
+[2m9:45:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/InsuranceClaims.jsx, /src/index.css[22m
+[2m9:45:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Wards.jsx, /src/index.css[22m
+[2m9:46:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Wards.jsx, /src/index.css[22m
+[2m9:46:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Wards.jsx, /src/index.css[22m
+[2m9:46:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Wards.jsx, /src/index.css[22m
+[2m9:46:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Inventory.jsx, /src/index.css[22m
+[2m9:46:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Inventory.jsx, /src/index.css[22m
+[2m9:46:40 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Prescriptions.jsx, /src/index.css[22m
+[2m9:46:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Prescriptions.jsx, /src/index.css[22m
+[2m9:46:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Prescriptions.jsx, /src/index.css[22m
+[2m9:47:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Prescriptions.jsx, /src/index.css[22m
+[2m9:47:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:47:25 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:47:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:47:47 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:47:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:48:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m9:48:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m9:48:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m9:48:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m9:48:47 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m9:48:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+ update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:23:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:23:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:23:37 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ThemeContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:37 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:37 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ThemeContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:37 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:23:45 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh (new export)
+[2m5:23:45 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:45 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh (new export)
+[2m5:23:45 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:23:49 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:49 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:49 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:49 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:23:54 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:54 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:54 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:54 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:23:58 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:58 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:23:58 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:23:58 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:24:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:24:04 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:24:04 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:24:04 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:24:04 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:24:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:24:09 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:24:09 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:24:09 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:24:09 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:30:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ReportTemplates.jsx, /src/index.css[22m
+[2m5:30:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:30:44 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:30:44 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:30:45 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:30:45 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:30:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:30:50 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:30:50 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:30:50 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:30:50 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:31:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:31:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:31:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:41:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/DoctorDashboard.jsx, /src/index.css[22m
+[2m5:41:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/DoctorDashboard.jsx, /src/index.css[22m
+[2m5:41:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/DoctorDashboard.jsx, /src/index.css[22m
+[2m5:41:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/DoctorDashboard.jsx, /src/index.css[22m
+[2m5:41:49 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: D:\BloodSampleProject\frontend\src\pages\DoctorDashboard.jsx: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (247:4)
+
+[0m [90m 245 |[31m         )}
+ [90m 246 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 247 |[31m     [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m     |[31m     [31m[1m^[22m[31m
+ [90m 248 |[31m   )
+ [90m 249 |[31m }
+ [90m 250 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mD:/BloodSampleProject/frontend/src/pages/DoctorDashboard.jsx[39m:247:4
+[33m  245|          )}
+  246|        </div>
+  247|      </div>
+     |      ^
+  248|    )
+  249|  }[39m
+      at constructor (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxParseElementAt (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4742:18)
+      at JSXParserMixin.jsxParseElement (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOpBaseRightExpr (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10986:34)
+      at JSXParserMixin.parseExprOpRightExpr (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10981:21)
+      at JSXParserMixin.parseExprOp (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10947:27)
+      at JSXParserMixin.parseExprOp (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10953:21)
+      at JSXParserMixin.parseExprOps (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10908:17)
+      at JSXParserMixin.parseMaybeConditional (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10784:23)
+      at D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10780:39
+      at JSXParserMixin.allowInAnd (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseExpression (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10780:17)
+      at JSXParserMixin.jsxParseExpressionContainer (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4632:31)
+      at JSXParserMixin.jsxParseElementAt (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4711:36)
+      at JSXParserMixin.jsxParseElement (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10784:23)
+      at D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10780:39
+      at JSXParserMixin.allowInAnd (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseExpression (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:10780:17)
+      at JSXParserMixin.parseReturnStatement (D:\BloodSampleProject\frontend\node_modules\@babel\parser\lib\index.js:13142:28)
+[2m5:42:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/DoctorDashboard.jsx, /src/index.css[22m
+[2m5:42:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Samples.jsx, /src/index.css[22m
+[2m5:42:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Samples.jsx, /src/index.css[22m
+[2m5:42:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Samples.jsx, /src/index.css[22m
+[2m5:42:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Samples.jsx, /src/index.css[22m
+[2m5:42:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Samples.jsx, /src/index.css[22m
+[2m5:42:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:42:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:42:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:42:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:43:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:43:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Billing.jsx, /src/index.css[22m
+[2m5:43:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:18 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:19 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:23 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:23 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:24 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:29 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Layout.jsx.tmp.28576.1775911413506[22m
+[2m5:43:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:33 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:34 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:34 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Layout.jsx.tmp.28576.1775911418028[22m
+[2m5:43:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:38 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?
+[2m5:43:44 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ResultTrend" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:56:24
+[33m  71 |  import CreditAccounts from "./pages/CreditAccounts";
+  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+     |                           ^
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+  75 |  export const ThemeContext = createContext();[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 58)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:47 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ResultTrend.jsx[22m
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:47 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:43:48 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/BloodSampleProject/frontend/src/App.jsx[39m:57:28
+[33m  72 |  import PatientStatement from "./pages/PatientStatement";
+  73 |  import ResultTrend from "./pages/ResultTrend";
+  74 |  import ShiftManagement from "./pages/ShiftManagement";
+     |                               ^
+  75 |  export const ThemeContext = createContext();
+  76 |  export const ModulesContext = createContext({});[39m
+      at TransformPluginContext._formatError (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 59)
+      at async TransformPluginContext.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///D:/BloodSampleProject/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m5:43:48 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./pages/ShiftManagement" from "src/App.jsx". Does the file exist?
+[2m5:44:49 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ShiftManagement.jsx[22m
+[2m5:46:09 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m5:46:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m5:46:18 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:46:18 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:48:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:48:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:48:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:52:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:55:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m5:56:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m5:58:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Settings.jsx, /src/index.css[22m
+[2m6:00:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m6:00:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m6:01:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m6:01:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m6:04:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css[22m
+[2m6:08:05 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Layout.jsx, /src/index.css, /src/pages/PatientRegister.jsx, /src/pages/Verification.jsx, /src/pages/ReportTemplates.jsx, /src/pages/Samples.jsx, /src/pages/DataExport.jsx, /src/pages/Dashboard.jsx, /src/pages/Doctors.jsx, /src/pages/TokenQueue.jsx, /src/pages/Results.jsx, /src/pages/DoctorDashboard.jsx, /src/pages/PatientDetail.jsx, /src/pages/Users.jsx, /src/pages/AuditLog.jsx, /src/pages/SampleRegister.jsx, /src/pages/TestPackages.jsx, /src/pages/ForgotPassword.jsx, /src/pages/InvoiceReceipt.jsx, /src/pages/Settings.jsx, /src/pages/MachineTest.jsx, /src/pages/Inventory.jsx, /src/pages/MISReports.jsx, /src/pages/DataImport.jsx, /src/pages/Billing.jsx, /src/pages/TestManagement.jsx, /src/pages/Report.jsx, /src/pages/ManualResults.jsx, /src/pages/DoctorSchedule.jsx, /src/pages/Login.jsx, /src/pages/Prescriptions.jsx, /src/pages/Signup.jsx, /src/pages/Categories.jsx, /src/pages/Patients.jsx, /src/pages/Branches.jsx, /src/pages/DailyClosing.jsx, /src/pages/OPD.jsx, /src/pages/Wards.jsx, /src/pages/IPD.jsx, /src/pages/Radiology.jsx, /src/pages/OT.jsx, /src/pages/PharmacyStore.jsx, /src/pages/ReferralCommission.jsx, /src/pages/HR.jsx, /src/App.jsx, /src/pages/InsuranceClaims.jsx, /src/pages/Appointments.jsx, /src/pages/PatientStatement.jsx, /src/pages/CreditAccounts.jsx, /src/pages/ResultTrend.jsx, /src/pages/ShiftManagement.jsx[22m
+[2m6:10:07 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m6:10:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m6:10:15 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/App.jsx[22m Could not Fast Refresh ("ModulesContext" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m6:10:15 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m6:14:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:19:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Radiology.jsx, /src/index.css[22m
+[2m6:19:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PatientPortal.jsx, /src/index.css[22m
+[2m6:19:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:19:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:11 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/InsuranceClaims.jsx, /src/index.css[22m
+[2m6:20:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:20:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/PharmacyStore.jsx, /src/index.css[22m
+[2m6:21:06 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/HR.jsx, /src/index.css[22m
+[2m6:22:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/CreditAccounts.jsx, /src/index.css[22m
+[2m6:22:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OT.jsx, /src/index.css[22m
+[2m6:23:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ShiftManagement.jsx, /src/index.css[22m
+[2m6:24:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:34:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:34:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:34:25 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:35:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:35:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Landing.jsx, /src/index.css[22m
+[2m6:35:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:35:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:37:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:37:58 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:38:05 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:38:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:38:58 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:39:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:41:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:41:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:41:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:41:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:45:05 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:45:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:45:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:45:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:45:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m6:46:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m6:46:53 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m6:47:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m6:47:18 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:47:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:47:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:47:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Appointments.jsx, /src/index.css[22m
+[2m6:47:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SampleRegister.jsx, /src/index.css[22m
+[2m6:48:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m
+[2m6:48:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/IPD.jsx, /src/index.css[22m
+[2m6:48:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/OPD.jsx, /src/index.css[22m

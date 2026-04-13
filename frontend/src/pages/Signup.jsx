@@ -125,29 +125,35 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden p-6">
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden p-3 sm:p-4">
+      {/* Background — desktop only */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse-soft"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-soft" style={{animationDelay: '1s'}}></div>
       </div>
 
-      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 w-full max-w-lg relative z-10 animate-scaleIn">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-green-600/30">
-            <span className="text-2xl">📝</span>
+      {/* Card — max height with internal scroll so button always visible */}
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg relative z-10 animate-scaleIn flex flex-col"
+           style={{ maxHeight: 'calc(100vh - 1.5rem)' }}>
+
+        {/* Fixed header */}
+        <div className="px-8 pt-7 pb-4 border-b border-slate-100 shrink-0">
+          <div className="text-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-lg shadow-green-600/30">
+              <span className="text-xl">📝</span>
+            </div>
+            <h2 className="text-xl font-bold text-slate-800">Create Account</h2>
+            <p className="text-slate-500 text-xs mt-0.5">Register for the LIS system</p>
           </div>
-          <h2 className="text-2xl font-bold text-slate-800">Create Account</h2>
-          <p className="text-slate-500 text-sm mt-1">Register for the LIS system</p>
+          {error && (
+            <div className="bg-red-50 text-red-600 px-4 py-2.5 rounded-xl mt-3 text-sm flex items-center gap-2 animate-slideDown">
+              <span>⚠️</span> {error}
+            </div>
+          )}
         </div>
 
-        {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm flex items-center gap-2 animate-slideDown">
-            <span>⚠️</span> {error}
-          </div>
-        )}
-
+        {/* Scrollable fields */}
+        <div className="overflow-y-auto flex-1 px-8 py-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
@@ -243,26 +249,27 @@ export default function Signup() {
             <p className="text-xs text-slate-400 mt-1">Ask your lab admin for the registration code</p>
           </div>
 
-          <button type="submit" disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-medium transition-all disabled:opacity-50 shadow-lg shadow-green-600/30 active:scale-[0.98]">
+        </form>
+        </div>{/* end scrollable */}
+
+        {/* Fixed footer — always visible, never hidden */}
+        <div className="px-8 py-5 border-t border-slate-100 bg-white/80 rounded-b-3xl shrink-0">
+          <button type="submit" form="signup-form" disabled={loading} onClick={handleSubmit}
+            className="w-full py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 shadow-lg shadow-green-600/30 active:scale-[0.98]">
             {loading ? (
               <span className="flex items-center justify-center gap-2">
                 <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
                 Creating Account...
               </span>
-            ) : 'Create Account'}
+            ) : '✅ Create Account'}
           </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-sm text-slate-500">
+          <p className="text-xs text-center text-slate-400 mt-3">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
-              Sign In
-            </Link>
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">Sign In</Link>
           </p>
         </div>
-      </div>
+
+      </div>{/* end card */}
     </div>
   )
 }

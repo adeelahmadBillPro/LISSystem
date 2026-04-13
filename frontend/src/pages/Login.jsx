@@ -39,14 +39,14 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
-      {/* Background animated shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Background shapes — hidden on mobile to prevent visual noise */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse-soft"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-soft" style={{animationDelay: '1s'}}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Left side - Branding */}
+      {/* Left side - Branding (desktop only) */}
       <div className="hidden lg:flex flex-1 items-center justify-center relative z-10 p-12">
         <div className="max-w-md animate-fadeInUp">
           <div className="text-6xl mb-6">🧬</div>
@@ -74,15 +74,15 @@ export default function Login() {
       </div>
 
       {/* Right side - Login Form */}
-      <div className="flex-1 flex items-center justify-center relative z-10 p-6">
-        <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 w-full max-w-md animate-scaleIn">
+      <div className="flex-1 flex items-start sm:items-center justify-center relative z-10 p-4 sm:p-6 pt-10 sm:pt-6">
+        <div className="bg-white rounded-3xl shadow-2xl p-5 sm:p-8 w-full max-w-md animate-scaleIn">
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/30">
-              <span className="text-3xl">🧬</span>
+          <div className="text-center mb-5">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-2.5 shadow-lg shadow-blue-600/30">
+              <span className="text-xl sm:text-2xl">🧬</span>
             </div>
-            <h2 className="text-2xl font-bold text-slate-800">Welcome Back</h2>
-            <p className="text-slate-500 text-sm mt-1">Sign in to your LIS account</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800">Welcome Back</h2>
+            <p className="text-slate-400 text-xs sm:text-sm mt-0.5">Sign in to your LIS account</p>
           </div>
 
           {error && (
@@ -91,7 +91,7 @@ export default function Login() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Username</label>
               <div className="relative">
@@ -132,7 +132,7 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <p className="text-sm text-slate-500">
               Don't have an account?{' '}
               <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
@@ -142,7 +142,7 @@ export default function Login() {
           </div>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-6">
+          <div className="flex items-center gap-3 my-4">
             <div className="flex-1 h-px bg-slate-200"></div>
             <span className="text-xs text-slate-400 uppercase">or</span>
             <div className="flex-1 h-px bg-slate-200"></div>
@@ -150,7 +150,7 @@ export default function Login() {
 
           {/* Patient Portal Link */}
           <Link to="/portal"
-            className="w-full py-3 border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-700 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm">
+            className="w-full py-2.5 border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-700 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm">
             <span>🏥</span> Patient Portal — View My Reports
           </Link>
         </div>

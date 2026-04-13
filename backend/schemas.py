@@ -111,6 +111,7 @@ class ResultResponse(BaseModel):
     flag: str
     status: str
     received_at: datetime
+    pathologist_notes: Optional[str] = None
 
     class Config:
         from_attributes = True

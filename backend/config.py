@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 480
 
+    WA_API_KEY: str = ""
+    WA_API_URL: str = "http://187.127.138.168/api/v1/messages/send"
+
     SERIAL_PORT: str = "COM3"
     SERIAL_BAUD_RATE: int = 9600
     LOG_DIR: str = "./logs"

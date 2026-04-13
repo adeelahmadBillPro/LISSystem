@@ -97,7 +97,11 @@ export default function Report() {
   if (error) return <div className="text-center py-20 text-red-500">{error}</div>
   if (!report) return null
 
-  const { patient, sample, doctor, results } = report
+  const { patient, sample, doctor, results, lab } = report
+  const labName = lab?.name || 'City Diagnostic Laboratory'
+  const labAddress = lab?.address || 'Main Boulevard, Lahore, Pakistan'
+  const labPhone = lab?.phone || '+92-300-1234567'
+  const labEmail = lab?.email || 'info@citydiagnostics.pk'
 
   return (
     <div>
@@ -128,10 +132,22 @@ export default function Report() {
       {/* Report Preview */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-4xl mx-auto print:shadow-none print:border-none">
         {/* Lab Header */}
-        <div className="text-center border-b-2 border-blue-800 pb-4 mb-6">
-          <h1 className="text-2xl font-bold text-blue-800">City Diagnostic Laboratory</h1>
-          <p className="text-sm text-slate-500">Main Boulevard, Lahore, Pakistan</p>
-          <p className="text-sm text-slate-500">Phone: +92-300-1234567 | Email: info@citydiagnostics.pk</p>
+        <div className="border-b-2 border-blue-800 pb-4 mb-6">
+          <div className="flex items-center gap-4">
+            {lab?.has_logo && (
+              <img
+                src={`/api/settings/logo`}
+                alt="Lab Logo"
+                className="h-16 w-auto object-contain flex-shrink-0"
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
+            )}
+            <div className={lab?.has_logo ? '' : 'text-center w-full'}>
+              <h1 className="text-2xl font-bold text-blue-800">{labName}</h1>
+              <p className="text-sm text-slate-500">{labAddress}</p>
+              <p className="text-sm text-slate-500">Phone: {labPhone} | Email: {labEmail}</p>
+            </div>
+          </div>
         </div>
 
         <h2 className="text-center text-lg font-semibold text-blue-800 mb-4">
