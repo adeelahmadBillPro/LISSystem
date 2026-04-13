@@ -26,6 +26,14 @@ logs/
 *.swp
 *.swo
 
+# Claude Code internals
+.claude/
+
+# Log files
+*.log
+backend.log
+frontend.log
+
 # OS
 .DS_Store
 Thumbs.db
